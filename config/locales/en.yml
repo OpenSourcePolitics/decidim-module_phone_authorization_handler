@@ -1,0 +1,10 @@
+---
+en:
+  decidim:
+    authorization_handlers:
+      phone_authorization_handler:
+        explanation: We need your phone number
+        name: Phone Authorization Handler
+    components:
+      phone_authorization_handler:
+        name: PhoneAuthorizationHandler
