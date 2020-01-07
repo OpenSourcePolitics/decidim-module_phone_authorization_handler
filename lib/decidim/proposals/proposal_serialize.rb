@@ -10,7 +10,7 @@ module Decidim
       include Decidim::TranslationsHelper
 
       # Public: Initializes the serializer with a proposal.
-      def initialize(proposal)
+      def initialize(proposal, public_scope = true)
         @proposal = proposal
       end
 
@@ -20,15 +20,15 @@ module Decidim
           id: proposal.id,
           category: {
             id: proposal.category.try(:id),
-              name: proposal.category.try(:name) || empty_translatable
+            name: proposal.category.try(:name) || empty_translatable
           },
           scope: {
             id: proposal.scope.try(:id),
-              name: proposal.scope.try(:name) || empty_translatable
+            name: proposal.scope.try(:name) || empty_translatable
           },
           participatory_space: {
             id: proposal.participatory_space.id,
-              url: Decidim::ResourceLocatorPresenter.new(proposal.participatory_space).url
+            url: Decidim::ResourceLocatorPresenter.new(proposal.participatory_space).url
           },
           collaborative_draft_origin: proposal.collaborative_draft_origin,
           component: { id: component.id },
@@ -48,23 +48,20 @@ module Decidim
           url: url,
           meeting_urls: meetings,
           related_proposals: related_proposals,
-          author: {
-            name: proposal.creator_author.name, 
-            nickname: proposal.creator_author.nickname,
-            phone_number: phone_number
-          }
         }
+      end
+
+      def author_metadata
+        serialize[:author].merge(
+          name: proposal.creator_author.name,
+          nickname: proposal.creator_author.nickname,
+          phone_number: phone_number
+        )
       end
 
       private
 
       attr_reader :proposal
-
-      def phone_number
-        decidim_user_id = Decidim::User.find proposal.creator_author
-        authorization = Decidim::Authorization.find.where(decidim_user_id: decidim_user_id)
-        authorization.metadata.phone_number
-      end
 
       def component
         proposal.component
@@ -88,6 +85,11 @@ module Decidim
 
       def attachments_url
         proposal.attachments.map { |attachment| proposal.organization.host + attachment.url }
+      end
+
+      def phone_number
+        authorization = Decidim::Authorization.find.where(decidim_user_id: proposal.creator_author.id)
+        authorization.metadata.phone_number
       end
     end
   end
