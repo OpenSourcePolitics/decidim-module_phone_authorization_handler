@@ -1,5 +1,8 @@
 ---
 en:
+  errors:
+    messages:
+      phone_number_format: Not a valid phone number format
   decidim:
     authorization_handlers:
       phone_authorization_handler:

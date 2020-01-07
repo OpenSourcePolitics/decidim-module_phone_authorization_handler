@@ -6,7 +6,7 @@ class PhoneAuthorizationHandler < Decidim::AuthorizationHandler
 
   validates :phone_number,
             length: { is: 10 },
-            format: { with: /0[1-9][0-9]{8}/, message: 'A phone number is required', if: proc { |x| x.phone_number.length == 10 } },
+            format: { with: /0[1-9][0-9]{8}/, message: I18n.t('errors.messages.phone_number_format') },
             presence: true
 
   def metadata
