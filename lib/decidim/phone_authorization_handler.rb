@@ -9,6 +9,4 @@ module Decidim
 
   module PhoneAuthorizationHandler
   end
-
-
 end
