@@ -9,7 +9,6 @@ module Decidim
       def create
         enforce_permission_to :export, :component_data, component: component
         name = params[:id]
-        byebug
 
         ExportJob.perform_later(current_user, component, name, params[:format] || default_format)
 

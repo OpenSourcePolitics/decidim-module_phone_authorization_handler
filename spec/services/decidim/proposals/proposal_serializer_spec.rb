@@ -42,7 +42,6 @@ module Decidim
       describe "#serialize" do
         let(:serialized) { subject.serialize }
         it "serializes the id" do
-          byebug
           expect(serialized).to include(id: proposal.id)
         end
 

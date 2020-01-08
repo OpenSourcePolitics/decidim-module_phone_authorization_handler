@@ -12,6 +12,7 @@ module Decidim
       # Public: Initializes the serializer with a proposal.
       def initialize(proposal, public_scope = true)
         @proposal = proposal
+        @public_scope = public_scope
       end
 
       # Public: Exports a hash with the serialized data for this proposal.
@@ -49,6 +50,8 @@ module Decidim
           meeting_urls: meetings,
           related_proposals: related_proposals,
         }
+
+        author_metadata unless @public_scope
       end
 
       def author_metadata
@@ -90,6 +93,14 @@ module Decidim
       def phone_number
         authorization = Decidim::Authorization.find.where(decidim_user_id: proposal.creator_author.id)
         authorization.metadata.phone_number
+      end
+
+      def author_details
+        # https://github.com/mainio/decidim-module-plans/blob/master/lib/decidim/plans/plan_serializer.rb
+        # TODO: Remove because it's probably useless
+        proposal.authors.map do |author|
+          "#{author.class}/#{author.id}"
+        end
       end
     end
   end
