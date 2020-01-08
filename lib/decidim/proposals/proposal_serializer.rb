@@ -17,7 +17,7 @@ module Decidim
 
       # Public: Exports a hash with the serialized data for this proposal.
       def serialize
-        {
+        serialized = {
           id: proposal.id,
           category: {
             id: proposal.category.try(:id),
@@ -50,16 +50,19 @@ module Decidim
           meeting_urls: meetings,
           related_proposals: related_proposals
         }
+        serialized.merge(author_metadata) unless @public_scope
 
-        author_metadata unless @public_scope
+        serialized
       end
 
       def author_metadata
-        serialize[:author].merge(
+        # TODO: Find the name and nickname
+        # Phone_number will probably fail
+        {
           name: proposal.creator_author.name,
           nickname: proposal.creator_author.nickname,
           phone_number: phone_number
-        )
+        }
       end
 
       private
