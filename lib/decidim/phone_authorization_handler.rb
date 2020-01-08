@@ -10,10 +10,10 @@ module Decidim
   end
 
   module Proposals
-    autoload :ProposalSerializer, 'decidim/proposals/proposal_serializer'
+    #autoload :ProposalSerializer, 'decidim/proposals/proposal_serializer'
   end
 
   module Exporters
-    autoload :CSV, 'decidim/exporters/csv'
+    #autoload :CSV, 'decidim/exporters/csv'
   end
 end

@@ -94,14 +94,6 @@ module Decidim
         authorization = Decidim::Authorization.find.where(decidim_user_id: proposal.creator_author.id)
         authorization.metadata.phone_number
       end
-
-      def author_details
-        # https://github.com/mainio/decidim-module-plans/blob/master/lib/decidim/plans/plan_serializer.rb
-        # TODO: Remove because it's probably useless
-        proposal.authors.map do |author|
-          "#{author.class}/#{author.id}"
-        end
-      end
     end
   end
 end

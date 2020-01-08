@@ -9,9 +9,7 @@ module Decidim
         manifest.name == name.to_sym
       end
 
-      # Liste de tous les proposals
       collection = export_manifest.collection.call(component)
-      # Récupere le serializer Proposals ( celui de la lib pas celui que j'edit )
       serializer = export_manifest.serializer
       export_data = Decidim::Exporters.find_exporter(format).new(collection, serializer).export
 

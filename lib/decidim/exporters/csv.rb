@@ -34,7 +34,11 @@ module Decidim
 
       def processed_collection
         @processed_collection ||= collection.map do |resource|
-          flatten(@serializer.new(resource).serialize)
+          if @serializer.is_a? Decidim::Proposals::ProposalSerializer
+            flatten(@serializer.new(resource, false).serialize)
+          else
+            flatten(@serializer.new(resource).serialize)
+          end
         end
       end
 
