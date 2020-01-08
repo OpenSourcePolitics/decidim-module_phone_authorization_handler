@@ -48,6 +48,5 @@ describe "User authorizations", type: :system do
 
       expect(page).to have_content("You've been successfully authorized")
     end
-
   end
 end

@@ -9,6 +9,10 @@ module Decidim
     class Engine < ::Rails::Engine
       isolate_namespace Decidim::PhoneAuthorizationHandler
 
+      initializer "decidim.exporters" do
+        require "decidim/exporters/csv"
+        require "decidim/proposals/proposal_serializer"
+      end
     end
   end
 end

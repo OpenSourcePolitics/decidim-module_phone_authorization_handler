@@ -41,6 +41,7 @@ module Decidim
 
       describe "#serialize" do
         let(:serialized) { subject.serialize }
+
         it "serializes the id" do
           expect(serialized).to include(id: proposal.id)
         end
@@ -118,7 +119,7 @@ module Decidim
           expect(serialized[:related_proposals].first).to match(%r{http.*/proposals})
         end
         it "serializes author" do
-          expect(serialized[:author]).to include(author: {name: proposal.creator_author.name})
+          expect(serialized[:author]).to include(author: { name: proposal.creator_author.name })
         end
 
         context "with proposal having an answer" do
