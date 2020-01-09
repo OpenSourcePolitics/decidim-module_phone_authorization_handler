@@ -53,7 +53,7 @@ module Decidim
 
         # TODO: IDE says @public_scope is a Hash but it shouldn't
 
-        data[:author] = author_metadata unless @public_scope
+        data[:author] = author_metadata
 
         data
       end
@@ -72,7 +72,7 @@ module Decidim
           user = Decidim::User.find proposal.creator_author.id
           author_metadata[:name] = user.try(:name)
           author_metadata[:nickname] = user.try(:nickname)
-          author_metadata[:phone_number] = phone_number user.id
+          #author_metadata[:phone_number] = phone_number user.id
         end
 
         author_metadata
