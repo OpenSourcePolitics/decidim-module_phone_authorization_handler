@@ -17,7 +17,7 @@ module Decidim
 
       # Public: Exports a hash with the serialized data for this proposal.
       def serialize
-        serialized = {
+        data = {
           id: proposal.id,
           category: {
             id: proposal.category.try(:id),
@@ -50,19 +50,12 @@ module Decidim
           meeting_urls: meetings,
           related_proposals: related_proposals
         }
-        serialized.merge(author_metadata) unless @public_scope
 
-        serialized
-      end
-
-      def author_metadata
-        # TODO: Find the name and nickname
-        # Phone_number will probably fail
-        {
-          name: proposal.creator_author.name,
-          nickname: proposal.creator_author.nickname,
-          phone_number: phone_number
-        }
+        if @public_scope
+          data
+        else
+          data[:author] << author_metadata
+        end
       end
 
       private
@@ -94,8 +87,23 @@ module Decidim
       end
 
       def phone_number
-        authorization = Decidim::Authorization.find.where(decidim_user_id: proposal.creator_author.id)
+        authorization = Decidim::Authorization.find.where(name: "phone_authorization_handler", decidim_user_id: proposal.creator_author.id)
         authorization.metadata.phone_number
+      end
+
+      def author_metadata
+        author_metadata = {
+          name: "",
+          nickname: "",
+          phone_number: ""
+        }
+        if proposal.creator.decidim_author_type == "Decidim::UserBaseEntity"
+          author_metadata[:name] = proposal.creator_author.name
+          author_metadata[:nickname] = "FakeNickname"
+          author_metadata[:phone_number] = "0666666666"
+        end
+
+        author_metadata
       end
     end
   end

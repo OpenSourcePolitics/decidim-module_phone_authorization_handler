@@ -122,6 +122,9 @@ module Decidim
           expect(serialized[:author]).to include(author: { name: proposal.creator_author.name })
         end
 
+        # TODO: Check if there is no data if the author is an Organization
+        # TODO: If author_type is a UserBaseEntity, verify if there is author and data related to
+
         context "with proposal having an answer" do
           let!(:proposal) { create(:proposal, :with_answer) }
 
