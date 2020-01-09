@@ -12,6 +12,7 @@ module Decidim
       initializer "decidim.phone_authorization_handler" do
         require "decidim/exporters/serializer"
         require "decidim/exporters/csv"
+        require "decidim/exporters/json"
         require "decidim/proposals/proposal_serializer"
       end
     end
