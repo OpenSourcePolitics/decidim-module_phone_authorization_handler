@@ -65,6 +65,8 @@ module Decidim
         @public_scope ? {} : block
       end
 
+      # author_metadata allows to retrieve user name, nickname and phone_number from the phone_authorization_handler
+      # Return an empty object if decidim_author_type is different than Decidim::UserBaseEntity
       def author_metadata
         author_metadata = {
             name: "",
@@ -82,6 +84,9 @@ module Decidim
         author_metadata
       end
 
+      # phone_number retrieve the phone number of an user stored from phone_authorization_handler
+      # Param: user_id : Integer
+      # Return string, empty or with the phone number
       def phone_number(user_id)
         authorization = Decidim::Authorization.where(name: "phone_authorization_handler", decidim_user_id: user_id)
         result = ""
