@@ -49,17 +49,22 @@ module Decidim
             url: url,
             meeting_urls: meetings,
             related_proposals: related_proposals
-        }.merge(@public_scope ? {} : { author: author_metadata })
+        }.merge(options_merge do
+          { author: author_metadata }
+        end)
       end
 
       private
 
       attr_reader :proposal
 
-      def options_merge
-
-        @public_scope ? { author: author_metadata } : {}
+      # options_merge allows to add some objects to merge to the serialize
+      # Params : &block : Proc || Block
+      # Return empty object or block
+      def options_merge(&block)
+        @public_scope ? {} : block
       end
+
       def author_metadata
         author_metadata = {
             name: "",
