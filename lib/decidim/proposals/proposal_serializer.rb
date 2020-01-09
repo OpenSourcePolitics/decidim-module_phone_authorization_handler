@@ -70,9 +70,10 @@ module Decidim
         }
         if proposal.creator.decidim_author_type == "Decidim::UserBaseEntity"
           user = Decidim::User.find proposal.creator_author.id
+
           author_metadata[:name] = user.try(:name)
           author_metadata[:nickname] = user.try(:nickname)
-          #author_metadata[:phone_number] = phone_number user.id
+          author_metadata[:phone_number] = phone_number user.id
         end
 
         author_metadata
@@ -80,7 +81,13 @@ module Decidim
 
       def phone_number(user_id)
         authorization = Decidim::Authorization.where(name: "phone_authorization_handler", decidim_user_id: user_id)
-        authorization.try(:metadata)[:phone_number].to_i
+        result = ""
+
+        unless authorization.empty?
+          result = authorization.first.try(:metadata).to_h["phone_number"] unless authorization.first.try(:metadata).nil?
+        end
+
+        result.presence || ""
       end
 
       def component
@@ -106,7 +113,6 @@ module Decidim
       def attachments_url
         proposal.attachments.map { |attachment| proposal.organization.host + attachment.url }
       end
-
     end
   end
 end
