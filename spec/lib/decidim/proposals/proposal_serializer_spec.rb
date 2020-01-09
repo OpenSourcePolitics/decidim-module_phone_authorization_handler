@@ -20,7 +20,6 @@ module Decidim
 
       let!(:proposals_component) { create(:component, manifest_name: "proposals", participatory_space: participatory_process) }
       let(:other_proposals) { create_list(:proposal, 2, component: proposals_component) }
-
       let(:expected_answer) do
         answer = proposal.answer
         Decidim.available_locales.each_with_object({}) do |locale, result|
@@ -119,7 +118,11 @@ module Decidim
           expect(serialized[:related_proposals].first).to match(%r{http.*/proposals})
         end
         it "serializes author" do
-          expect(serialized[:author]).to include(author: { name: proposal.creator_author.name })
+          expect(serialized).to include(:author)
+
+          # TODO: Change public_scope argument
+          # TODO: Create user object which is the proposal.creator_author
+          # TODO: Create a phone_authorization_handler factory to add phone_number to this user
         end
 
         # TODO: Check if there is no data if the author is an Organization
