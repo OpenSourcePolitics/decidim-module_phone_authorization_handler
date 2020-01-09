@@ -51,16 +51,37 @@ module Decidim
           related_proposals: related_proposals
         }
 
-        if @public_scope
-          data
-        else
-          data[:author] << author_metadata
-        end
+        # TODO: IDE says @public_scope is a Hash but it shouldn't
+
+        data[:author] = author_metadata unless @public_scope
+
+        data
       end
 
       private
 
       attr_reader :proposal
+
+      def author_metadata
+        author_metadata = {
+          name: "",
+          nickname: "",
+          phone_number: ""
+        }
+        if proposal.creator.decidim_author_type == "Decidim::UserBaseEntity"
+          user = Decidim::User.find proposal.creator_author.id
+          author_metadata[:name] = user.try(:name)
+          author_metadata[:nickname] = user.try(:nickname)
+          author_metadata[:phone_number] = phone_number user.id
+        end
+
+        author_metadata
+      end
+
+      def phone_number(user_id)
+        authorization = Decidim::Authorization.where(name: "phone_authorization_handler", decidim_user_id: user_id)
+        authorization.try(:metadata)[:phone_number].to_i
+      end
 
       def component
         proposal.component
@@ -86,25 +107,6 @@ module Decidim
         proposal.attachments.map { |attachment| proposal.organization.host + attachment.url }
       end
 
-      def phone_number
-        authorization = Decidim::Authorization.find.where(name: "phone_authorization_handler", decidim_user_id: proposal.creator_author.id)
-        authorization.metadata.phone_number
-      end
-
-      def author_metadata
-        author_metadata = {
-          name: "",
-          nickname: "",
-          phone_number: ""
-        }
-        if proposal.creator.decidim_author_type == "Decidim::UserBaseEntity"
-          author_metadata[:name] = proposal.creator_author.name
-          author_metadata[:nickname] = "FakeNickname"
-          author_metadata[:phone_number] = "0666666666"
-        end
-
-        author_metadata
-      end
     end
   end
 end
