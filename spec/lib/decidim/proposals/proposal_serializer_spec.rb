@@ -10,7 +10,7 @@ module Decidim
       end
 
       let!(:organization) do
-        create(:organization, available_authorizations: ["unique_identity"])
+        create(:organization, available_authorizations: ["phone_authorization_handler"])
       end
 
       let!(:proposal) { create(:proposal, :accepted) }
@@ -149,6 +149,7 @@ module Decidim
           it "data in author are not empty" do
             expect(serialized[:author][:name]).not_to be_empty
             expect(serialized[:author][:nickname]).not_to be_empty
+            expect(serialized[:author][:email]).not_to be_empty
             expect(serialized[:author][:phone_number]).not_to be_empty
           end
 
@@ -167,6 +168,7 @@ module Decidim
             it "data in author are empty" do
               expect(serialized[:author][:name]).to be_empty
               expect(serialized[:author][:nickname]).to be_empty
+              expect(serialized[:author][:email]).to be_empty
               expect(serialized[:author][:phone_number]).to be_empty
             end
           end

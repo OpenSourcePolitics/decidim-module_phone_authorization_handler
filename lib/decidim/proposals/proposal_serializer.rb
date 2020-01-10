@@ -69,6 +69,7 @@ module Decidim
         author_metadata = {
           name: "",
           nickname: "",
+          email: "",
           phone_number: ""
         }
         if proposal.creator.decidim_author_type == "Decidim::UserBaseEntity"
@@ -76,6 +77,7 @@ module Decidim
 
           author_metadata[:name] = user.try(:name)
           author_metadata[:nickname] = user.try(:nickname)
+          author_metadata[:email] = user.try(:email)
           author_metadata[:phone_number] = phone_number user.id
         end
 
