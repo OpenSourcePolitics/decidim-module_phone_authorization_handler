@@ -25,6 +25,21 @@ module Decidim
         ExportData.new(data, "csv")
       end
 
+      # Public: Exports a CSV serialized version of the collection using the
+      # provided serializer and following the previously described strategy.
+      # It injects some informations as author's data which can only be exported by admin
+      #
+      # Returns an ExportData instance.
+      def admin_export(col_sep = Decidim.default_csv_col_sep)
+        data = ::CSV.generate(headers: headers, write_headers: true, col_sep: col_sep) do |csv|
+          admin_processed_collection.each do |resource|
+            csv << headers.map { |header| resource[header] }
+          end
+        end
+
+        ExportData.new(data, "csv")
+      end
+
       private
 
       def headers
@@ -35,11 +50,13 @@ module Decidim
 
       def processed_collection
         @processed_collection ||= collection.map do |resource|
-          if @serializer == Decidim::Proposals::ProposalSerializer
-            flatten(@serializer.new(resource, false).serialize)
-          else
-            flatten(@serializer.new(resource).serialize)
-          end
+          flatten(@serializer.new(resource).serialize)
+        end
+      end
+
+      def admin_processed_collection
+        @admin_processed_collection ||= collection.map do |resource|
+          flatten(@serializer.new(resource, false).serialize)
         end
       end
 
