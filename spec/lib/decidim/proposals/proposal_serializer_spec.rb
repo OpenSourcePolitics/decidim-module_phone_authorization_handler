@@ -9,6 +9,10 @@ module Decidim
         described_class.new(proposal)
       end
 
+      let!(:organization) do
+        create(:organization, available_authorizations: ["unique_identity"])
+      end
+
       let!(:proposal) { create(:proposal, :accepted) }
       let!(:category) { create(:category, participatory_space: component.participatory_space) }
       let!(:scope) { create(:scope, organization: component.participatory_space.organization) }
@@ -19,6 +23,19 @@ module Decidim
       let(:meetings) { create_list(:meeting, 2, component: meetings_component) }
 
       let!(:proposals_component) { create(:component, manifest_name: "proposals", participatory_space: participatory_process) }
+
+      let!(:authorization) do
+        create(
+            :authorization,
+            id: 1,
+            name: "phone",
+            user: proposal.creator_author,
+            metadata: {
+                "phone_number" => "0644444444"
+            }
+        )
+      end
+
       let(:other_proposals) { create_list(:proposal, 2, component: proposals_component) }
       let(:expected_answer) do
         answer = proposal.answer

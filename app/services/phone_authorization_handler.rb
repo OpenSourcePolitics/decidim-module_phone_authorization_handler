@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # Allows to create a form for simple Phone authorization
+# TODO: Check namespace
 class PhoneAuthorizationHandler < Decidim::AuthorizationHandler
   attribute :phone_number, String
 
