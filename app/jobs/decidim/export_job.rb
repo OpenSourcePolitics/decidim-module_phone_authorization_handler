@@ -11,7 +11,9 @@ module Decidim
 
       collection = export_manifest.collection.call(component)
       serializer = export_manifest.serializer
+
       export_data = if serializer == Decidim::Proposals::ProposalSerializer
+
                       Decidim::Exporters.find_exporter(format).new(collection, serializer).admin_export
                     else
                       Decidim::Exporters.find_exporter(format).new(collection, serializer).export

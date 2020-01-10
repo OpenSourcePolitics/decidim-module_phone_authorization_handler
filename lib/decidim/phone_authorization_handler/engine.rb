@@ -13,6 +13,7 @@ module Decidim
         require "decidim/exporters/serializer"
         require "decidim/exporters/csv"
         require "decidim/exporters/json"
+        require "decidim/exporters/excel"
         require "decidim/proposals/proposal_serializer"
       end
     end

@@ -36,7 +36,7 @@ describe "Phone authorization handler form", type: :system do
 
     it "displays authorization form" do
       expect(page).to have_content "Phone Authorization Handler"
-      expect(page).to have_content I18n.t('phone_authorization.form.email_recuperation_message')
+      expect(page).to have_content I18n.t("phone_authorization.form.email_recuperation_message")
 
       within ".new_authorization_handler" do
         expect(page).to have_field("Phone number")
@@ -54,7 +54,7 @@ describe "Phone authorization handler form", type: :system do
       fill_in "Phone number", with: "066666666"
       click_button "Send"
 
-      expect(page).to have_content('is the wrong length (should be 10 characters)')
+      expect(page).to have_content("is the wrong length (should be 10 characters)")
     end
 
     it "shows error message for not numeric phone number" do
