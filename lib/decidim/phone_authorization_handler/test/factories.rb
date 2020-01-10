@@ -4,6 +4,8 @@ require "decidim/core/test/factories"
 require "decidim/participatory_processes/test/factories"
 require "decidim/meetings/test/factories"
 require "decidim/proposals/test/factories"
+require "decidim/proposals/test/factories"
+require "decidim/accountability/test/factories"
 
 FactoryBot.define do
   factory :phone_authorization_handler_component, parent: :component do

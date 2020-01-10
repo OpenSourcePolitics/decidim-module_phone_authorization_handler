@@ -26,13 +26,13 @@ module Decidim
 
       let!(:authorization) do
         create(
-            :authorization,
-            id: 1,
-            name: "phone_authorization_handler",
-            user: proposal.creator_author,
-            metadata: {
-                "phone_number": "0644444444"
-            }
+          :authorization,
+          id: 1,
+          name: "phone_authorization_handler",
+          user: proposal.creator_author,
+          metadata: {
+            "phone_number": "0644444444"
+          }
         )
       end
 
@@ -135,7 +135,7 @@ module Decidim
           expect(serialized[:related_proposals].first).to match(%r{http.*/proposals})
         end
 
-        context "private export proposal" do
+        context "when private export proposal" do
           subject do
             described_class.new(proposal, false)
           end
@@ -152,7 +152,7 @@ module Decidim
             expect(serialized[:author][:phone_number]).not_to be_empty
           end
 
-          context "the creator is not an user or is official proposal" do
+          context "when the creator is not an user or is official proposal" do
             let!(:admin) { create(:user, :admin) }
 
             before do

@@ -18,39 +18,38 @@ module Decidim
       # Public: Exports a hash with the serialized data for this proposal.
       def serialize
         {
-            id: proposal.id,
-            category: {
-                id: proposal.category.try(:id),
-                name: proposal.category.try(:name) || empty_translatable
-            },
-            scope: {
-                id: proposal.scope.try(:id),
-                name: proposal.scope.try(:name) || empty_translatable
-            },
-            participatory_space: {
-                id: proposal.participatory_space.id,
-                url: Decidim::ResourceLocatorPresenter.new(proposal.participatory_space).url
-            },
-            collaborative_draft_origin: proposal.collaborative_draft_origin,
-            component: {id: component.id},
-            title: present(proposal).title,
-            body: present(proposal).body,
-            state: proposal.state.to_s,
-            reference: proposal.reference,
-            answer: ensure_translatable(proposal.answer),
-            supports: proposal.proposal_votes_count,
-            endorsements: proposal.endorsements.count,
-            comments: proposal.comments.count,
-            amendments: proposal.amendments.count,
-            attachments_url: attachments_url,
-            attachments: proposal.attachments.count,
-            followers: proposal.followers.count,
-            published_at: proposal.published_at,
-            url: url,
-            meeting_urls: meetings,
-            related_proposals: related_proposals
-        }.merge(options_merge({author: author_metadata}
-        ))
+          id: proposal.id,
+          category: {
+            id: proposal.category.try(:id),
+            name: proposal.category.try(:name) || empty_translatable
+          },
+          scope: {
+            id: proposal.scope.try(:id),
+            name: proposal.scope.try(:name) || empty_translatable
+          },
+          participatory_space: {
+            id: proposal.participatory_space.id,
+            url: Decidim::ResourceLocatorPresenter.new(proposal.participatory_space).url
+          },
+          collaborative_draft_origin: proposal.collaborative_draft_origin,
+          component: { id: component.id },
+          title: present(proposal).title,
+          body: present(proposal).body,
+          state: proposal.state.to_s,
+          reference: proposal.reference,
+          answer: ensure_translatable(proposal.answer),
+          supports: proposal.proposal_votes_count,
+          endorsements: proposal.endorsements.count,
+          comments: proposal.comments.count,
+          amendments: proposal.amendments.count,
+          attachments_url: attachments_url,
+          attachments: proposal.attachments.count,
+          followers: proposal.followers.count,
+          published_at: proposal.published_at,
+          url: url,
+          meeting_urls: meetings,
+          related_proposals: related_proposals
+        }.merge(options_merge(author: author_metadata))
       end
 
       private
@@ -68,9 +67,9 @@ module Decidim
       # Return an empty object if decidim_author_type is different than Decidim::UserBaseEntity
       def author_metadata
         author_metadata = {
-            name: "",
-            nickname: "",
-            phone_number: ""
+          name: "",
+          nickname: "",
+          phone_number: ""
         }
         if proposal.creator.decidim_author_type == "Decidim::UserBaseEntity"
           user = Decidim::User.find proposal.creator_author.id
