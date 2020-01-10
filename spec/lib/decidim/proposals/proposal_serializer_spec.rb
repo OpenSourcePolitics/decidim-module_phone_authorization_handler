@@ -28,10 +28,10 @@ module Decidim
         create(
             :authorization,
             id: 1,
-            name: "phone",
+            name: "phone_authorization_handler",
             user: proposal.creator_author,
             metadata: {
-                "phone_number" => "0644444444"
+                "phone_number": "0644444444"
             }
         )
       end
@@ -143,10 +143,6 @@ module Decidim
 
           it "serializes author" do
             expect(serialized).to include(:author)
-
-            # TODO: Change public_scope argument
-            # TODO: Create user object which is the proposal.creator_author
-            # TODO: Create a phone_authorization_handler factory to add phone_number to this user
           end
         end
 
