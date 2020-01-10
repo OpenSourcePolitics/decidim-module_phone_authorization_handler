@@ -134,13 +134,22 @@ module Decidim
           expect(serialized[:related_proposals].length).to eq(2)
           expect(serialized[:related_proposals].first).to match(%r{http.*/proposals})
         end
-        it "serializes author" do
-          expect(serialized).to include(:author)
 
-          # TODO: Change public_scope argument
-          # TODO: Create user object which is the proposal.creator_author
-          # TODO: Create a phone_authorization_handler factory to add phone_number to this user
+        context "private export proposal" do
+          subject do
+            described_class.new(proposal, false)
+          end
+          let(:serialized) { subject.serialize }
+
+          it "serializes author" do
+            expect(serialized).to include(:author)
+
+            # TODO: Change public_scope argument
+            # TODO: Create user object which is the proposal.creator_author
+            # TODO: Create a phone_authorization_handler factory to add phone_number to this user
+          end
         end
+
 
         # TODO: Check if there is no data if the author is an Organization
         # TODO: If author_type is a UserBaseEntity, verify if there is author and data related to

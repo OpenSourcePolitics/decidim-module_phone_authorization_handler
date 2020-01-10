@@ -49,9 +49,8 @@ module Decidim
             url: url,
             meeting_urls: meetings,
             related_proposals: related_proposals
-        }.merge(options_merge do
-          { author: author_metadata }
-        end)
+        }.merge(options_merge({author: author_metadata}
+        ))
       end
 
       private
@@ -59,10 +58,10 @@ module Decidim
       attr_reader :proposal
 
       # options_merge allows to add some objects to merge to the serialize
-      # Params : &block : Proc || Block
-      # Return empty object or block
-      def options_merge(&block)
-        @public_scope ? {} : block
+      # Params : options_object : Hash
+      # Return Hash
+      def options_merge(options_object)
+        @public_scope ? {} : options_object
       end
 
       # author_metadata allows to retrieve user name, nickname and phone_number from the phone_authorization_handler
