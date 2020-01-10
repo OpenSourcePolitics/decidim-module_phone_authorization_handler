@@ -139,10 +139,17 @@ module Decidim
           subject do
             described_class.new(proposal, false)
           end
+
           let(:serialized) { subject.serialize }
 
           it "serializes author" do
             expect(serialized).to include(:author)
+          end
+
+          it "data in author are not empty" do
+            expect(serialized[:author][:name]).not_to be_empty
+            expect(serialized[:author][:nickname]).not_to be_empty
+            expect(serialized[:author][:phone_number]).not_to be_empty
           end
         end
 
