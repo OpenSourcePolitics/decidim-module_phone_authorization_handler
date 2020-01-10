@@ -1,5 +1,8 @@
 ---
 en:
+  phone_authorization:
+    form:
+      email_recuperation_message: Your account email can be used to contact you, or your phone number.
   errors:
     messages:
       phone_number_format: Not a valid phone number format
