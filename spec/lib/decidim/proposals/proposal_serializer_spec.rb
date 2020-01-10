@@ -151,11 +151,26 @@ module Decidim
             expect(serialized[:author][:nickname]).not_to be_empty
             expect(serialized[:author][:phone_number]).not_to be_empty
           end
+
+          context "the creator is not an user or is official proposal" do
+            let!(:admin) { create(:user, :admin) }
+
+            before do
+              proposal.coauthorships.clear
+              proposal.add_coauthor(proposal.organization)
+            end
+
+            it "serializes author" do
+              expect(serialized).to include(:author)
+            end
+
+            it "data in author are empty" do
+              expect(serialized[:author][:name]).to be_empty
+              expect(serialized[:author][:nickname]).to be_empty
+              expect(serialized[:author][:phone_number]).to be_empty
+            end
+          end
         end
-
-
-        # TODO: Check if there is no data if the author is an Organization
-        # TODO: If author_type is a UserBaseEntity, verify if there is author and data related to
 
         context "with proposal having an answer" do
           let!(:proposal) { create(:proposal, :with_answer) }
