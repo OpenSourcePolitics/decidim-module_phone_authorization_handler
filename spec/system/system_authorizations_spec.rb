@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-describe "Admin lists authorizations", type: :system do
+describe "System authorizations", type: :system do
   let!(:organization) do
     create(:organization, available_authorizations: ["phone_authorization_handler"])
   end
