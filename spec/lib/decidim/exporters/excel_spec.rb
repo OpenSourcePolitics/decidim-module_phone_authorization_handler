@@ -9,8 +9,9 @@ module Decidim
 
     let(:serializer) do
       Class.new do
-        def initialize(resource)
+        def initialize(resource, public_scope=true)
           @resource = resource
+          @public_scope = public_scope
         end
 
         def serialize
@@ -35,6 +36,25 @@ module Decidim
     describe "export" do
       it "exports the collection using the right serializer" do
         exported = StringIO.new(subject.export.read)
+        book = Spreadsheet.open(exported)
+        worksheet = book.worksheet(0)
+        expect(worksheet.rows.length).to eq(3)
+
+        headers = worksheet.rows[0]
+        expect(headers).to eq(["id", "serialized_name/ca", "serialized_name/es", "other_ids", "float", "date"])
+        expect(worksheet.rows[1][0..4]).to eq([1, "foocat", "fooes", "1, 2, 3", 1.66])
+        expect(worksheet.rows[1].datetime(5)).to eq(Time.zone.local(2017, 10, 1, 5, 0))
+
+        expect(worksheet.rows[2][0..4]).to eq([2, "barcat", "bares", "2, 3, 4", 0.55])
+        expect(worksheet.rows[2].datetime(5)).to eq(Time.zone.local(2017, 9, 20))
+      end
+    end
+
+
+    describe "admin export" do
+
+      it "exports the collection using the right serializer" do
+        exported = StringIO.new(subject.admin_export.read)
         book = Spreadsheet.open(exported)
         worksheet = book.worksheet(0)
         expect(worksheet.rows.length).to eq(3)
