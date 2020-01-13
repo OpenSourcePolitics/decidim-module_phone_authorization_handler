@@ -60,14 +60,14 @@ module Decidim
           horizontal_align: :center
         )
 
-        sheet.row(0).replace headers
+        sheet.row(0).replace admin_headers
 
-        headers.length.times.each do |index|
+        admin_headers.length.times.each do |index|
           sheet.column(index).width = 20
         end
 
         admin_processed_collection.each_with_index do |resource, index|
-          sheet.row(index + 1).replace(headers.map { |header| resource[header] })
+          sheet.row(index + 1).replace(admin_headers.map { |header| resource[header] })
         end
 
         output = StringIO.new

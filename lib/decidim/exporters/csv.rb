@@ -31,9 +31,9 @@ module Decidim
       #
       # Returns an ExportData instance.
       def admin_export(col_sep = Decidim.default_csv_col_sep)
-        data = ::CSV.generate(headers: headers, write_headers: true, col_sep: col_sep) do |csv|
+        data = ::CSV.generate(headers: admin_headers, write_headers: true, col_sep: col_sep) do |csv|
           admin_processed_collection.each do |resource|
-            csv << headers(admin_processed_collection).map { |header| resource[header] }
+            csv << admin_headers.map { |header| resource[header] }
           end
         end
 
@@ -44,8 +44,13 @@ module Decidim
 
       def headers(collection = processed_collection)
         return [] if collection.empty?
-
         collection.first.keys
+      end
+
+      def admin_headers
+        return [] if admin_processed_collection.empty?
+
+        admin_processed_collection.first.keys
       end
 
       def processed_collection
