@@ -156,7 +156,7 @@ module Decidim
             expect(serialized[:author][:phone_number]).not_to be_empty
           end
 
-          context "when an admin create proposal from backoffice" do
+          context "when proposal was created by admin from backoffice" do
             let!(:admin) { create(:user, :admin) }
 
             before do
@@ -168,10 +168,21 @@ module Decidim
               expect(serialized).to include(:author)
             end
 
-            it "data in author are empty" do
+            it "author's data are empty" do
               expect(serialized[:author][:name]).to be_empty
               expect(serialized[:author][:nickname]).to be_empty
               expect(serialized[:author][:email]).to be_empty
+              expect(serialized[:author][:phone_number]).to be_empty
+            end
+          end
+
+          context "when there is no authorization for user" do
+            let(:authorization) { nil }
+
+            it "author's phone number should be empty" do
+              expect(serialized[:author][:name]).not_to be_empty
+              expect(serialized[:author][:nickname]).not_to be_empty
+              expect(serialized[:author][:email]).not_to be_empty
               expect(serialized[:author][:phone_number]).to be_empty
             end
           end
