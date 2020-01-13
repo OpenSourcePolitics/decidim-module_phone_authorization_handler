@@ -48,6 +48,12 @@ module Decidim
         expect(worksheet.rows[2][0..4]).to eq([2, "barcat", "bares", "2, 3, 4", 0.55])
         expect(worksheet.rows[2].datetime(5)).to eq(Time.zone.local(2017, 9, 20))
       end
+
+      it "defines processed_collection only" do
+        subject.export
+        expect(subject.instance_variable_get(:@processed_collection)).not_to eq(nil)
+        expect(subject.instance_variable_get(:@admin_processed_collection)).to eq(nil)
+      end
     end
 
 
@@ -66,6 +72,13 @@ module Decidim
 
         expect(worksheet.rows[2][0..4]).to eq([2, "barcat", "bares", "2, 3, 4", 0.55])
         expect(worksheet.rows[2].datetime(5)).to eq(Time.zone.local(2017, 9, 20))
+      end
+
+
+      it "defines admin_processed_collection only" do
+        subject.admin_export
+        expect(subject.instance_variable_get(:@processed_collection)).to eq(nil)
+        expect(subject.instance_variable_get(:@admin_processed_collection)).not_to eq(nil)
       end
     end
   end

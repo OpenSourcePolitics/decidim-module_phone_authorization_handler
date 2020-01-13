@@ -61,7 +61,7 @@ describe "Phone authorization handler form", type: :system do
       fill_in "Phone number", with: "NOT_A_VALID_FORMAT"
       click_button "Send"
 
-      expect(page).to have_content("There's an error in this field.")
+      expect(page).to have_content("Not a valid phone number format")
     end
 
     it "shows error message for invalid phone number format" do

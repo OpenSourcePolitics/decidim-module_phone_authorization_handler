@@ -134,8 +134,11 @@ module Decidim
           expect(serialized[:related_proposals].length).to eq(2)
           expect(serialized[:related_proposals].first).to match(%r{http.*/proposals})
         end
+        it "doesn't serialize author's data" do
+          expect(serialized).not_to include(:author)
+        end
 
-        context "when private export proposal" do
+        context "when admin exports proposal" do
           subject do
             described_class.new(proposal, false)
           end
@@ -153,7 +156,7 @@ module Decidim
             expect(serialized[:author][:phone_number]).not_to be_empty
           end
 
-          context "when the creator is not an user or is official proposal" do
+          context "when an admin create proposal from backoffice" do
             let!(:admin) { create(:user, :admin) }
 
             before do
