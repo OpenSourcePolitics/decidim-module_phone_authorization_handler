@@ -9,7 +9,7 @@ module Decidim
 
     let(:serializer) do
       Class.new do
-        def initialize(resource, public_scope=true)
+        def initialize(resource, public_scope = true)
           @resource = resource
           @public_scope = public_scope
         end
@@ -56,9 +56,7 @@ module Decidim
       end
     end
 
-
     describe "admin export" do
-
       it "exports the collection using the right serializer" do
         exported = StringIO.new(subject.admin_export.read)
         book = Spreadsheet.open(exported)
@@ -73,7 +71,6 @@ module Decidim
         expect(worksheet.rows[2][0..4]).to eq([2, "barcat", "bares", "2, 3, 4", 0.55])
         expect(worksheet.rows[2].datetime(5)).to eq(Time.zone.local(2017, 9, 20))
       end
-
 
       it "defines admin_processed_collection only" do
         subject.admin_export

@@ -27,7 +27,7 @@ module Decidim
     let(:collection) do
       [
         OpenStruct.new(id: 1, name: { ca: "foocat", es: "fooes" }, ids: [1, 2, 3]),
-        OpenStruct.new(id: 2, name: { ca: "barcat", es: "bares" }, ids: [1, 2, 3]),
+        OpenStruct.new(id: 2, name: { ca: "barcat", es: "bares" }, ids: [1, 2, 3])
       ]
     end
 
@@ -46,7 +46,6 @@ module Decidim
     end
 
     describe "admin export" do
-
       it "exports the collection using the right serializer" do
         exported = subject.admin_export.read
         data = CSV.parse(exported, headers: true, col_sep: ";").map(&:to_h)
