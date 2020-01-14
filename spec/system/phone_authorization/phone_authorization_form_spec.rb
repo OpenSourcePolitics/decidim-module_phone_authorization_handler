@@ -98,7 +98,7 @@ describe "Phone authorization handler form", type: :system do
       expect(page).to have_content("Phone Authorization Handler")
     end
 
-    it "should add the redirect_url defined to the authorization path" do
+    it "adds the redirect_url defined to the authorization path" do
       click_link find("a", text: "New proposal").text
 
       redirect_url = find("a", text: "New proposal")["data-redirect-url"]
