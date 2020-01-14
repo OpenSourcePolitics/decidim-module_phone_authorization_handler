@@ -96,21 +96,33 @@ describe "Phone authorization handler form", type: :system do
       expect(page).to have_content(find("a", text: "New proposal").text)
       click_link find("a", text: "New proposal").text
       expect(page).to have_content("Phone Authorization Handler")
+    end
+
+    it "should add the redirect_url defined to the authorization path" do
+      click_link find("a", text: "New proposal").text
 
       redirect_url = find("a", text: "New proposal")["data-redirect-url"]
       within "#authorizationModal" do
         expect(page).to have_css("a.button.expanded")
         href = find(".button.expanded")[:href]
-        expect(href).to include("&redirect_url=#{redirect_url.gsub(/\//, "%2F")}")
+        expect(href).to include("&redirect_url=#{redirect_url.gsub(%r{/}, "%2F")}")
       end
-      click_link "Authorize with \"Phone Authorization Handler\""
+    end
+
+    it "adds a redirect_url to the authorization form" do
+      click_link find("a", text: "New proposal").text
+      redirect_url = find("a", text: "New proposal")["data-redirect-url"]
+
+      within "#authorizationModal" do
+        click_link find("a", text: "Authorize with \"Phone Authorization Handler\"").text
+      end
 
       fill_in "Phone number", with: "0655555555"
       within ".new_authorization_handler" do
         find("*[type=\"submit\"]").click
       end
-      expect(current_path).to eq(redirect_url)
-    end
 
+      expect(page).to have_current_path(redirect_url)
+    end
   end
 end
