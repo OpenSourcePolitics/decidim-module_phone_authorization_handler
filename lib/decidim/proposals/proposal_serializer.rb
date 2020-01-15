@@ -12,6 +12,7 @@ module Decidim
       # Public: Initializes the serializer with a proposal.
       def initialize(proposal, public_scope = true)
         @proposal = proposal
+        @public_scope = public_scope
       end
 
       # Public: Exports a hash with the serialized data for this proposal.
@@ -47,21 +48,55 @@ module Decidim
           published_at: proposal.published_at,
           url: url,
           meeting_urls: meetings,
-          related_proposals: related_proposals,
-        }
-      end
-
-      def author_metadata
-        serialize[:author].merge(
-          name: proposal.creator_author.name,
-          nickname: proposal.creator_author.nickname,
-          phone_number: phone_number
-        )
+          related_proposals: related_proposals
+        }.merge(options_merge(author: author_metadata))
       end
 
       private
 
       attr_reader :proposal
+
+      # options_merge allows to add some objects to merge to the serialize
+      # Params : options_object : Hash
+      # Return Hash
+      def options_merge(options_object)
+        @public_scope ? {} : options_object
+      end
+
+      # author_metadata allows to retrieve user name, nickname and phone_number from the phone_authorization_handler
+      # Return an empty object if decidim_author_type is different than Decidim::UserBaseEntity
+      def author_metadata
+        author_metadata = {
+          name: "",
+          nickname: "",
+          email: "",
+          phone_number: ""
+        }
+        if proposal.creator.decidim_author_type == "Decidim::UserBaseEntity"
+          user = Decidim::User.find proposal.creator_author.id
+
+          author_metadata[:name] = user.try(:name).presence || ""
+          author_metadata[:nickname] = user.try(:nickname).presence || ""
+          author_metadata[:email] = user.try(:email).presence || ""
+          author_metadata[:phone_number] = phone_number user.id
+        end
+
+        author_metadata
+      end
+
+      # phone_number retrieve the phone number of an user stored from phone_authorization_handler
+      # Param: user_id : Integer
+      # Return string, empty or with the phone number
+      def phone_number(user_id)
+        authorization = Decidim::Authorization.where(name: "phone_authorization_handler", decidim_user_id: user_id)
+        result = ""
+
+        unless authorization.empty?
+          result = authorization.first.try(:metadata).to_h["phone_number"] unless authorization.first.try(:metadata).nil?
+        end
+
+        result.presence || ""
+      end
 
       def component
         proposal.component
@@ -85,11 +120,6 @@ module Decidim
 
       def attachments_url
         proposal.attachments.map { |attachment| proposal.organization.host + attachment.url }
-      end
-
-      def phone_number
-        authorization = Decidim::Authorization.find.where(decidim_user_id: proposal.creator_author.id)
-        authorization.metadata.phone_number
       end
     end
   end

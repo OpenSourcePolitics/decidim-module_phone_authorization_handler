@@ -9,6 +9,10 @@ module Decidim
         described_class.new(proposal)
       end
 
+      let!(:organization) do
+        create(:organization, available_authorizations: ["phone_authorization_handler"])
+      end
+
       let!(:proposal) { create(:proposal, :accepted) }
       let!(:category) { create(:category, participatory_space: component.participatory_space) }
       let!(:scope) { create(:scope, organization: component.participatory_space.organization) }
@@ -19,8 +23,20 @@ module Decidim
       let(:meetings) { create_list(:meeting, 2, component: meetings_component) }
 
       let!(:proposals_component) { create(:component, manifest_name: "proposals", participatory_space: participatory_process) }
-      let(:other_proposals) { create_list(:proposal, 2, component: proposals_component) }
 
+      let!(:authorization) do
+        create(
+          :authorization,
+          id: 1,
+          name: "phone_authorization_handler",
+          user: proposal.creator_author,
+          metadata: {
+            "phone_number": "0644444444"
+          }
+        )
+      end
+
+      let(:other_proposals) { create_list(:proposal, 2, component: proposals_component) }
       let(:expected_answer) do
         answer = proposal.answer
         Decidim.available_locales.each_with_object({}) do |locale, result|
@@ -41,8 +57,8 @@ module Decidim
 
       describe "#serialize" do
         let(:serialized) { subject.serialize }
+
         it "serializes the id" do
-          byebug
           expect(serialized).to include(id: proposal.id)
         end
 
@@ -118,8 +134,58 @@ module Decidim
           expect(serialized[:related_proposals].length).to eq(2)
           expect(serialized[:related_proposals].first).to match(%r{http.*/proposals})
         end
-        it "serializes author" do
-          expect(serialized[:author]).to include(author: {name: proposal.creator_author.name})
+        it "doesn't serialize author's data" do
+          expect(serialized).not_to include(:author)
+        end
+
+        context "when admin exports proposal" do
+          subject do
+            described_class.new(proposal, false)
+          end
+
+          let(:serialized) { subject.serialize }
+
+          it "serializes author" do
+            expect(serialized).to include(:author)
+          end
+
+          it "data in author are not empty" do
+            expect(serialized[:author][:name]).not_to be_empty
+            expect(serialized[:author][:nickname]).not_to be_empty
+            expect(serialized[:author][:email]).not_to be_empty
+            expect(serialized[:author][:phone_number]).not_to be_empty
+          end
+
+          context "when proposal was created by admin from backoffice" do
+            let!(:admin) { create(:user, :admin) }
+
+            before do
+              proposal.coauthorships.clear
+              proposal.add_coauthor(proposal.organization)
+            end
+
+            it "serializes author" do
+              expect(serialized).to include(:author)
+            end
+
+            it "author's data are empty" do
+              expect(serialized[:author][:name]).to be_empty
+              expect(serialized[:author][:nickname]).to be_empty
+              expect(serialized[:author][:email]).to be_empty
+              expect(serialized[:author][:phone_number]).to be_empty
+            end
+          end
+
+          context "when there is no authorization for user" do
+            let(:authorization) { nil }
+
+            it "author's phone number should be empty" do
+              expect(serialized[:author][:name]).not_to be_empty
+              expect(serialized[:author][:nickname]).not_to be_empty
+              expect(serialized[:author][:email]).not_to be_empty
+              expect(serialized[:author][:phone_number]).to be_empty
+            end
+          end
         end
 
         context "with proposal having an answer" do

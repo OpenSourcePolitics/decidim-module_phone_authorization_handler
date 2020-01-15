@@ -34,6 +34,7 @@ describe PhoneAuthorizationHandler do
 
       it { is_expected.to eq(false) }
     end
+
     context "when phone number is not only integer" do
       let(:phone_number) { "FGHGFDSD" }
 
