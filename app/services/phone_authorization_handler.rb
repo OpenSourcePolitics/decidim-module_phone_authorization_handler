@@ -5,8 +5,8 @@ class PhoneAuthorizationHandler < Decidim::AuthorizationHandler
   attribute :phone_number, String
 
   validates :phone_number,
-            length: { is: 10 },
-            format: { with: /0[1-9][0-9]{8}/, message: I18n.t("errors.messages.phone_number_format") },
+            length: { in: 10..12 },
+            format: { with: /\A(\+33|0)[1-9][0-9]{8}\z/, message: I18n.t("errors.messages.phone_number_format") },
             presence: true
 
   def metadata

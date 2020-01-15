@@ -54,7 +54,14 @@ describe "Phone authorization handler form", type: :system do
       fill_in "Phone number", with: "066666666"
       click_button "Send"
 
-      expect(page).to have_content("is the wrong length (should be 10 characters)")
+      expect(page).to have_content("There's an error in this field")
+    end
+
+    it "shows error message for to long phone number" do
+      fill_in "Phone number", with: "06666666666666"
+      click_button "Send"
+
+      expect(page).to have_content("Not a valid phone number format")
     end
 
     it "shows error message for not numeric phone number" do
