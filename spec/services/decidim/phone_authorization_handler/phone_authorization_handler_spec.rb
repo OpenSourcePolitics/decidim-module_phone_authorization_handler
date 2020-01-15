@@ -58,6 +58,7 @@ describe PhoneAuthorizationHandler do
 
       it { is_expected.to eq(false) }
     end
+
     context "when phone number is too long" do
       let(:phone_number) { "+3366666666666" }
 

@@ -13,4 +13,3 @@ class PhoneAuthorizationHandler < Decidim::AuthorizationHandler
     super.merge(phone_number: phone_number)
   end
 end
-
