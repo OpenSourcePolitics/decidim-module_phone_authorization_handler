@@ -4,7 +4,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: decidim/decidim@sha256:348fb1faa49cfe76ba7cbeafc67ca09002cf95f0ffa7a76eefa9d5b3774e0ee9
+      - image: decidim/decidim@sha256:22a41aa89fecb6374155d944d443f2b18668a5b477f5d7c3a8e0639749afcd5a
         environment:
           DATABASE_USERNAME: postgres
 
@@ -30,7 +30,7 @@ jobs:
             gem install bundler
       - run:
           name: Install dependencies
-          command: bundle install --jobs=4 --retry=3
+          command: bundle install
 
       - save_cache:
           key: bundler-dependencies-{{ checksum "Gemfile.lock" }}
@@ -43,7 +43,7 @@ jobs:
 
       - run:
           name: Generate test app
-          command: bundle exec rake test_app
+          command: bundle exec rake decidim:generate_external_test_app
 
       - run:
           name: Run rubocop
@@ -54,30 +54,8 @@ jobs:
           command: /app/.circleci/run_erblint.sh
 
       - run:
-          name: Setup Code Climate test-reporter
-          command: |
-            # download test reporter as a static binary
-              curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
-              chmod +x ./cc-test-reporter
-      - run:
-          name: run tests
-          command: |
-            ./cc-test-reporter before-build
-            mkdir /tmp/test-results
-            TEST_FILES="$(circleci tests glob "spec/**/*_spec.rb" | \
-            circleci tests split --split-by=timings)"
-            bundle exec rspec \
-            --format progress \
-            --format RspecJunitFormatter \
-            --out /tmp/test-results/rspec.xml \
-            --format progress \
-            $TEST_FILES
-      - run:
-          name: Report test coverage
-          command: |
-            ./cc-test-reporter after-build --coverage-input-type simplecov coverage/.resultset.json --exit-code $?
-      - store_test_results:
-          path: /tmp/test-results
+          name: Run RSpec tests
+          command: bundle exec rspec
 
       - store_artifacts:
           path: /app/spec/decidim_dummy_app/tmp/screenshots

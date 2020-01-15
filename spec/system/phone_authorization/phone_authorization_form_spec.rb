@@ -71,4 +71,58 @@ describe "Phone authorization handler form", type: :system do
       expect(page).to have_content("Not a valid phone number format")
     end
   end
+
+  context "when create new proposal" do
+    include_context "with a component"
+
+    let!(:participatory_processes) { create_list(:participatory_process, 5, :with_steps, organization: organization) }
+    let!(:component) { create(:proposal_component, :with_creation_enabled, participatory_space: participatory_processes.first) }
+
+    before do
+      permissions = {
+        create: {
+          authorization_handlers: {
+            "phone_authorization_handler" => { "options" => {} }
+          }
+        }
+      }
+
+      component.update!(permissions: permissions)
+
+      visit main_component_path(component)
+    end
+
+    it "authorizationModal should appear on new proposal click link" do
+      expect(page).to have_content(find("a", text: "New proposal").text)
+      click_link find("a", text: "New proposal").text
+      expect(page).to have_content("Phone Authorization Handler")
+    end
+
+    it "adds the redirect_url defined to the authorization path" do
+      click_link find("a", text: "New proposal").text
+
+      redirect_url = find("a", text: "New proposal")["data-redirect-url"]
+      within "#authorizationModal" do
+        expect(page).to have_css("a.button.expanded")
+        href = find(".button.expanded")[:href]
+        expect(href).to include("&redirect_url=#{redirect_url.gsub(%r{/}, "%2F")}")
+      end
+    end
+
+    it "adds a redirect_url to the authorization form" do
+      click_link find("a", text: "New proposal").text
+      redirect_url = find("a", text: "New proposal")["data-redirect-url"]
+
+      within "#authorizationModal" do
+        click_link find("a", text: "Authorize with \"Phone Authorization Handler\"").text
+      end
+
+      fill_in "Phone number", with: "0655555555"
+      within ".new_authorization_handler" do
+        find("*[type=\"submit\"]").click
+      end
+
+      expect(page).to have_current_path(redirect_url)
+    end
+  end
 end
