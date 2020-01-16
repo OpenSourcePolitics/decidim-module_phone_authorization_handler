@@ -5,7 +5,7 @@ fr:
       phone_authorization_handler:
         explanation: Récupération du numéro de téléphone de l'utilisateur
         name: Récupération du numéro de téléphone
-        usage_policy: Informations et usage de l’e-mail réservées aux administrateurs,
+        usage_policy_description: Informations et usage de l’e-mail réservées aux administrateurs,
           non accessible à l’ensemble des utilisateurs.
     components:
       phone_authorization_handler:
