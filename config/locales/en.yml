@@ -1,16 +1,19 @@
 ---
 en:
-  phone_authorization:
-    form:
-      email_recuperation_message: Your account email can be used to contact you, or your phone number.
-  errors:
-    messages:
-      phone_number_format: Not a valid phone number format
   decidim:
     authorization_handlers:
       phone_authorization_handler:
-        explanation: We need your phone number
-        name: Phone Authorization Handler
+        explanation: Recovery of the user phone number
+        name: Phone number recovery
+        usage_policy_description: E-mail informations and usage reserved to administrators,
+          inaccessible for all users.
     components:
       phone_authorization_handler:
         name: PhoneAuthorizationHandler
+  errors:
+    messages:
+      phone_number_format: Not a valid phone number format
+  phone_authorization:
+    form:
+      email_recuperation_message: Your account email can be used to contact you, as
+        well as your phone number.

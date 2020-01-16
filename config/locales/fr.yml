@@ -1,16 +1,20 @@
 ---
 fr:
-  phone_authorization:
-    form:
-      email_recuperation_message: Votre adresse email renseignée lors de la création de votre compte peut être utilisée pour vous contacter, comme votre numéro de téléphone.
-  errors:
-    messages:
-      phone_number_format: Format du numéro de téléphone invalide.
   decidim:
     authorization_handlers:
       phone_authorization_handler:
-        explanation: Demande du numéro de téléphone
-        name: Phone Authorization Handler
+        explanation: Récupération du numéro de téléphone de l'utilisateur
+        name: Récupération du numéro de téléphone
     components:
       phone_authorization_handler:
         name: PhoneAuthorizationHandler
+  errors:
+    messages:
+      phone_number_format: Format du numéro de téléphone invalide.
+  phone_authorization:
+    form:
+      email_recuperation_message: Votre adresse e-mail, renseignée lors de la création
+        de votre compte, peut être utilisée pour vous contacter ainsi que votre numéro
+        de téléphone.
+      usage_policy: Informations et usage de l’e-mail réservées aux administrateurs,
+        non accessible à l’ensemble des utilisateurs.
