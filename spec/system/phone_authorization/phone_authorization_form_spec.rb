@@ -23,7 +23,7 @@ describe "Phone authorization handler form", type: :system do
 
   it "displays the authorization item" do
     within ".tabs-content.vertical" do
-      expect(page).to have_content("Phone Authorization Handler")
+      expect(page).to have_content("Phone number recovery")
     end
   end
 
@@ -31,11 +31,11 @@ describe "Phone authorization handler form", type: :system do
     before do
       visit "/authorizations"
 
-      click_link "Phone Authorization Handler"
+      click_link "Phone number recovery"
     end
 
     it "displays authorization form" do
-      expect(page).to have_content "Phone Authorization Handler"
+      expect(page).to have_content "Phone number recovery"
       expect(page).to have_content I18n.t("phone_authorization.form.email_recuperation_message")
 
       within ".new_authorization_handler" do
@@ -102,7 +102,7 @@ describe "Phone authorization handler form", type: :system do
     it "authorizationModal should appear on new proposal click link" do
       expect(page).to have_content(find("a", text: "New proposal").text)
       click_link find("a", text: "New proposal").text
-      expect(page).to have_content("Phone Authorization Handler")
+      expect(page).to have_content("Phone number recovery")
     end
 
     it "adds the redirect_url defined to the authorization path" do
@@ -121,7 +121,7 @@ describe "Phone authorization handler form", type: :system do
       redirect_url = find("a", text: "New proposal")["data-redirect-url"]
 
       within "#authorizationModal" do
-        click_link find("a", text: "Authorize with \"Phone Authorization Handler\"").text
+        click_link find("a", text: "Authorize with \"Phone number recovery\"").text
       end
 
       fill_in "Phone number", with: "0655555555"

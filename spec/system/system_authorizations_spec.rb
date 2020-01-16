@@ -20,7 +20,7 @@ describe "System authorizations", type: :system do
 
   it "allows the system admin to list all available authorization methods" do
     within ".edit_organization" do
-      expect(page).to have_content("Phone Authorization Handler")
+      expect(page).to have_content("Phone number recovery")
     end
   end
 

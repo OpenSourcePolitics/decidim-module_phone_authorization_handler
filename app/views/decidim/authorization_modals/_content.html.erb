@@ -18,7 +18,7 @@
     <% next if status.ok? || authorizations.global_code && status.code != base_code %>
     <p><%= t ".#{status.code}.explanation", authorization: t("#{status.handler_name}.name", scope: "decidim.authorization_handlers") %></p>
     <% if status.handler_name == "phone_authorization_handler" %>
-    <p><%= t("decidim.authorization_handlers.phone_authorization_handler.usage_policy_description") %></p>
+      <p><%= t("decidim.authorization_handlers.phone_authorization_handler.usage_policy_description") %></p>
     <% end %>
     <% if status.data[:extra_explanation] %>
       <p><%= t status.data[:extra_explanation][:key], **status.data[:extra_explanation][:params] %></p>
