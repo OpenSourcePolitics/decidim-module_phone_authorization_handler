@@ -21,7 +21,7 @@
  * injected.
  *
  */
-$((target, options) => {
+$(() => {
     const removeUrlParameter = (url, parameter) => {
         const urlParts = url.split("?");
 
@@ -52,53 +52,21 @@ $((target, options) => {
 
         return url;
     }
-    const mutationObserver = (selector) => {
-        return new Promise((resolve, reject) => {
-            // Example from : https://gist.github.com/jwilson8767/db379026efcbd932f64382db4b02853e
-            let el = document.querySelector(selector);
-
-            if (el) {resolve(el);}
-            new MutationObserver((mutationRecords, observer) => {
-                // Query for elements matching the specified selector
-                for (let mutation of mutationRecords) {
-                    if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
-                        for ( let node of mutation.addedNodes ) {
-                            if ( node.nodeName === "DIV" ) {
-                                resolve($(node).find("a.button.expanded"));
-                                // Disable observer
-                                observer.disconnect();
-                            }
-                        }
-
-                    }
-                }
-            })
-                .observe(document.documentElement, {
-                    childList: true,
-                    subtree: true
-                });
-        });
-    };
 
     $(document).on("click.zf.trigger", (event) => {
-        let target = `#${$(event.target).data("open")}`;
+        const target = `#${$(event.target).data("open")}`;
         const redirectUrl = $(event.target).data("redirectUrl");
 
         if (target && redirectUrl) {
-            $("<input type='hidden' />")
-                .attr("id", "redirect_url")
-                .attr("name", "redirect_url")
-                .attr("value", redirectUrl)
-                .appendTo(`${target} form`);
+            $("<input type='hidden' />").
+            attr("id", "redirect_url").
+            attr("name", "redirect_url").
+            attr("value", redirectUrl).
+            appendTo(`${target} form`);
 
-            mutationObserver(target).then( (element) => {
-                if (element && $(element).attr("href").length > 0) {
-                    $(element).attr("href", (index, href) => {
-                        href = removeUrlParameter(href, "redirect_url");
-                        const querystring = jQuery.param({"redirect_url": redirectUrl});
-                        return href + (href.match(/\?/) ? "&" : "?") + querystring;
-                    });
-                }
+            $(`${target} a`).attr("href", (index, href) => {
+                const querystring = jQuery.param({"redirect_url": redirectUrl});
+                return href + (href.match(/\?/) ? "&" : "?") + querystring;
             });
         }
     });
