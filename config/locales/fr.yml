@@ -28,4 +28,4 @@ fr:
       phone_number_format: Format du numéro de téléphone invalide.
   phone_authorization:
     form:
-      email_recuperation_message: La Ville d'Angers peut également chercher à vous contacter à l'adresse email que vous utilisez sur cette plateforme. Ces informations personnelles sont réservées aux administrateurs, et en aucun cas accessibles aux autres utilisateurs.
+      email_recuperation_message: La Ville d'Angers peut également chercher à vous contacter à l'adresse email que vous utilisez sur cette plateforme. Ces informations personnelles sont réservées aux administrateurs de la plateforme, et en aucun cas accessibles aux autres utilisateurs.

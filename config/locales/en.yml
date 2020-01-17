@@ -5,7 +5,7 @@ en:
       phone_authorization_handler:
         explanation: Recovery of the user phone number
         fields:
-          phone_number: Phone number ( without point nor whitespace )
+          phone_number: Phone number (without point nor whitespace)
         name: Phone number recovery
     authorization_modals:
       content:
@@ -28,4 +28,4 @@ en:
       phone_number_format: Not a valid phone number format
   phone_authorization:
     form:
-      email_recuperation_message: The City of Angers may also seek to contact you with the email address you use on this platform. This personal information is reserved for administrators and is not accessible to other users.
+      email_recuperation_message: The City of Angers may also seek to contact you with the email address you use on this platform. This personal information is reserved for the platform's administrators and is not accessible to other users.
