@@ -11,7 +11,7 @@ fr:
       content:
         missing:
           authorize: Je renseigne mon numéro de téléphone
-          explanation: Les équipes de la Ville d'Angers peuvent avoir besoin de vous contacter au sujet de votre participation. Pour cette raison, nous vous demandons de renseigner un numéro de téléphone auquel vous êtes joignable.
+          explanation: Les équipes de %{organization_name} peuvent avoir besoin de vous contacter au sujet de votre participation. Pour cette raison, nous vous demandons de renseigner un numéro de téléphone auquel vous êtes joignable.
           title: Information nécessaire pour réaliser cette action
     components:
       phone_authorization_handler:
@@ -28,4 +28,4 @@ fr:
       phone_number_format: Format du numéro de téléphone invalide.
   phone_authorization:
     form:
-      email_recuperation_message: La Ville d'Angers peut également chercher à vous contacter à l'adresse email que vous utilisez sur cette plateforme. Ces informations personnelles sont réservées aux administrateurs de la plateforme, et en aucun cas accessibles aux autres utilisateurs.
+      email_recuperation_message: "%{organization_name} peut également chercher à vous contacter à l'adresse email que vous utilisez sur cette plateforme. Ces informations personnelles sont réservées aux administrateurs de la plateforme, et en aucun cas accessibles aux autres utilisateurs."
