@@ -11,7 +11,7 @@ en:
       content:
         missing:
           authorize: I fill in my phone number
-          explanation: "%{organization_name} may need to contact you about your participation. For this reason, we ask you to provide a phone number which allows to reach you."
+          explanation: The organization may need to contact you about your participation. For this reason, we ask you to provide a phone number which allows to reach you.
           title: Information needed to carry out this action
     components:
       phone_authorization_handler:
@@ -28,4 +28,4 @@ en:
       phone_number_format: Not a valid phone number format
   phone_authorization:
     form:
-      email_recuperation_message: "%{organization_name} may also seek to contact you with the email address you use on this platform. This personal information is reserved for the platform's administrators and is not accessible to other users."
+      email_recuperation_message: The organization may also seek to contact you with the email address you use on this platform. This personal information is reserved for the platform's administrators and is not accessible to other users.
