@@ -16,7 +16,7 @@
   </div>
   <% authorizations.statuses.each do |status| %>
     <% next if status.ok? || authorizations.global_code && status.code != base_code %>
-    <p><%= t ".#{status.code}.explanation", authorization: t("#{status.handler_name}.name", scope: "decidim.authorization_handlers") %></p>
+    <p><%= t ".#{status.code}.explanation", organization_name: current_organization.name, authorization: t("#{status.handler_name}.name", scope: "decidim.authorization_handlers") %></p>
     <% if status.data[:extra_explanation] %>
       <p><%= t status.data[:extra_explanation][:key], **status.data[:extra_explanation][:params] %></p>
     <% end %>

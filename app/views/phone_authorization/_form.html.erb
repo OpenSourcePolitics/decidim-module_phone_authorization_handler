@@ -3,5 +3,5 @@
   <div class="field">
     <%= form.text_field :phone_number, label: t("authorization_handlers.phone_authorization_handler.fields.phone_number", scope: "decidim") %>
   </div>
-  <small><i><%= t(".email_recuperation_message") %></i></small>
+  <small><i><%= t(".email_recuperation_message", organization_name: current_organization.name) %></i></small>
 </div>
