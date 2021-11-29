@@ -1,0 +1,31 @@
+---
+cs:
+  decidim:
+    authorization_handlers:
+      phone_authorization_handler:
+        explanation: Obnova telefonního čísla uživatele
+        fields:
+          phone_number: Telefonní číslo (bez teček a mezer)
+        name: Obnova telefonního čísla
+    authorization_modals:
+      content:
+        missing:
+          authorize: Vyplnil jsem své telefonní číslo
+          explanation: Možná vás bude muset týmy správců kontaktovat ohledně vaší účasti. Z tohoto důvodu vás žádáme, abyste uvedli telefonní číslo, které vám umožní kontaktovat vás.
+          title: Informace potřebné k provedení této akce
+    components:
+      phone_authorization_handler:
+        name: PhoneAuthorizationHandler
+    verifications:
+      authorizations:
+        new:
+          authorize: pokračuji
+          authorize_with: Vyplňte své telefonní číslo
+        skip_verification: Bez poskytnutí těchto informací nebudete moci pokračovat v akci. Ale můžete %{link}
+        start_exploring: konzultovat obsah platformy
+  errors:
+    messages:
+      phone_number_format: Neplatný formát telefonního čísla
+  phone_authorization:
+    form:
+      email_recuperation_message: Správce vás také může kontaktovat s e-mailovou adresou, kterou používáte na této platformě. Tyto osobní údaje jsou vyhrazeny pro správce platformy a nejsou přístupné dalším uživatelům.
