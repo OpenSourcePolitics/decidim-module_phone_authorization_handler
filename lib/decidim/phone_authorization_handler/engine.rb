@@ -10,7 +10,9 @@ module Decidim
       isolate_namespace Decidim::PhoneAuthorizationHandler
 
       config.to_prepare do
-        Decidim::Proposals::ProposalSerializer.prepend(Decidim::PhoneAuthorizationHandler::Extends::ProposalSerializerExtend)
+        Decidim::Proposals::ProposalSerializer.prepend (Decidim::PhoneAuthorizationHandler::Extends::ProposalSerializerExtend)
+
+        Decidim::Exporters::CSV.prepend(Decidim::PhoneAuthorizationHandler::Extends::CSVExporterExtend)
       end
 
       initializer "decidim.phone_authorization_handler" do
