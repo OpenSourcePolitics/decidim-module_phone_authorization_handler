@@ -1,15 +1,10 @@
 # frozen_string_literal: true
 
-module Decidim
-  module Proposals
-    # This class serializes a Proposal so can be exported to CSV, JSON or other
-    # formats.
-    class ProposalSerializer < Decidim::Exporters::Serializer
-      include Decidim::ApplicationHelper
-      include Decidim::ResourceHelper
-      include Decidim::TranslationsHelper
-
+module Decidim::PhoneAuthorizationHandler
+  module Extends
+    module ProposalSerializerExtend
       # Public: Initializes the serializer with a proposal.
+      # public_scope : Bool (default: true) - Allow to add extra information when administrator exports
       def initialize(proposal, public_scope = true)
         @proposal = proposal
         @public_scope = public_scope
@@ -31,30 +26,31 @@ module Decidim
             id: proposal.participatory_space.id,
             url: Decidim::ResourceLocatorPresenter.new(proposal.participatory_space).url
           },
-          collaborative_draft_origin: proposal.collaborative_draft_origin,
           component: { id: component.id },
-          title: present(proposal).title,
-          body: present(proposal).body,
+          title: proposal.title,
+          body: proposal.body,
           state: proposal.state.to_s,
           reference: proposal.reference,
           answer: ensure_translatable(proposal.answer),
           supports: proposal.proposal_votes_count,
-          endorsements: proposal.endorsements.count,
-          comments: proposal.comments.count,
-          amendments: proposal.amendments.count,
-          attachments_url: attachments_url,
+          endorsements: {
+            total_count: proposal.endorsements.count,
+            user_endorsements: user_endorsements
+          },
+          comments: proposal.comments_count,
           attachments: proposal.attachments.count,
           followers: proposal.followers.count,
           published_at: proposal.published_at,
           url: url,
           meeting_urls: meetings,
-          related_proposals: related_proposals
+          related_proposals: related_proposals,
+          is_amend: proposal.emendation?,
+          original_proposal: {
+            title: proposal&.amendable&.title,
+            url: original_proposal_url
+          }
         }.merge(options_merge(author: author_metadata))
       end
-
-      private
-
-      attr_reader :proposal
 
       # options_merge allows to add some objects to merge to the serialize
       # Params : options_object : Hash
@@ -89,37 +85,14 @@ module Decidim
       # Return string, empty or with the phone number
       def phone_number(user_id)
         authorization = Decidim::Authorization.where(name: "phone_authorization_handler", decidim_user_id: user_id)
-        result = ""
+        return "" if authorization.blank?
 
-        unless authorization.empty?
-          result = authorization.first.try(:metadata).to_h["phone_number"] unless authorization.first.try(:metadata).nil?
-        end
+        metadata = authorization.first.try(:metadata)
+        return "" if metadata.blank?
 
-        result.presence || ""
-      end
-
-      def component
-        proposal.component
-      end
-
-      def meetings
-        proposal.linked_resources(:meetings, "proposals_from_meeting").map do |meeting|
-          Decidim::ResourceLocatorPresenter.new(meeting).url
-        end
-      end
-
-      def related_proposals
-        proposal.linked_resources(:proposals, "copied_from_component").map do |proposal|
-          Decidim::ResourceLocatorPresenter.new(proposal).url
-        end
-      end
-
-      def url
-        Decidim::ResourceLocatorPresenter.new(proposal).url
-      end
-
-      def attachments_url
-        proposal.attachments.map { |attachment| proposal.organization.host + attachment.url }
+        # rubocop:disable Lint/SafeNavigationChain
+        authorization.first.try(:metadata)&.to_h["phone_number"].presence || ""
+        # rubocop:enable Lint/SafeNavigationChain
       end
     end
   end

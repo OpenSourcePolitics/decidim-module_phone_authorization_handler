@@ -774,7 +774,7 @@ Style/OptionalBooleanParameter:
   # A list of parameter names that will be flagged by this cop.
   Exclude:
     - spec/**/*_spec.rb
-    - lib/decidim/proposals/proposal_serializer.rb
+    - lib/decidim/phone_authorization_handler/extends/proposal_serializer_extend.rb
 
 # Allow safe assignment in conditions.
 Style/ParenthesesAroundCondition:
