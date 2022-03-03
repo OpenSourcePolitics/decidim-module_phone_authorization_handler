@@ -3,6 +3,7 @@ fr:
   decidim:
     authorization_handlers:
       phone_authorization_handler:
+        explanation: Vérifiez votre compte en renseignant votre numéro de téléphone
         fields:
           phone_number: Numéro de téléphone (sans point ni espace)
         name: Récupération du numéro de téléphone
@@ -30,7 +31,5 @@ fr:
       phone_number_format: Format du numéro de téléphone invalide.
   phone_authorization:
     form:
-      email_recuperation_message: La Ville d'Angers peut également chercher à vous
-        contacter à l'adresse email que vous utilisez sur cette plateforme. Ces informations
-        personnelles sont réservées aux administrateurs de la plateforme, et en aucun
-        cas accessibles aux autres utilisateurs.
+      email_recuperation_message: Ces informations personnelles sont réservées aux
+        administrateurs de la plateforme, et en aucun cas accessibles aux autres utilisateurs.
