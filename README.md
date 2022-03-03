@@ -2,15 +2,33 @@
 
 Ask a phone number through a Decidim authorization handler before any protected action.
 
-![authorization modal](./docs/images/authorization_modal.png)
-![authorization form](./docs/images/authorization_form.png)
+---
+
+
+<img alt="Authorization modal opened by the phone authorization handler" src="./docs/images/authorization_modal.png" title="Authorization modal" width="300"/>
+
+<img alt="Authorization form of the phone authorization handler" src="./docs/images/authorization_form.png" title="Authorization form" width="300"/>
 
 ## Requirements
 * Decidim `>= v0.25.2`
 
-## Usage
+## Installation
 
-You can setup easily the phone authorization handler from Decidim system and backoffice, let's see : 
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'decidim-phone_authorization_handler', git: 'github.com/OpenSourcePolitics/decidim-module_phone_authorization_handler.git', branch: 'master'
+```
+
+And then execute:
+
+```bash
+bundle
+```
+
+## Getting started
+
+You can setup easily the phone authorization handler from Decidim system and backoffice, let's see :
 
 1. First, log in system side at `https://example.com/system`
 2. Edit your organization
@@ -27,21 +45,8 @@ Great the phone authorization handler should now be available !
 4. Manage permissions for the proposals
 5. Enable phone authorization handler
 
-Congratulations, users will have to refer their phone number before being authorized to perform actions. 
+Congratulations, users will have to refer their phone number before being authorized to perform actions.
 
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'decidim-phone_authorization_handler', git: 'github.com/OpenSourcePolitics/decidim-module_phone_authorization_handler.git', branch: 'master'
-```
-
-And then execute:
-
-```bash
-bundle
-```
 
 ## Please note the customizations
 
