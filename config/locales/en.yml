@@ -11,9 +11,7 @@ en:
       content:
         missing:
           authorize: I fill in my phone number
-          explanation: Teams of Angers City may need to contact you about your participation.
-            For this reason, we ask you to provide a phone number which allows to
-            reach you.
+          explanation: You must provide your phone number to authorized to perform this action
           title: Information needed to carry out this action
     components:
       phone_authorization_handler:
