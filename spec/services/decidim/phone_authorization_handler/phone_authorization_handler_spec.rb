@@ -12,7 +12,6 @@ describe PhoneAuthorizationHandler do
 
   describe "metadata" do
     subject { handler.metadata }
-
     let(:extra_params) { { phone_number: "0666666666" } }
 
     it { is_expected.to eq(phone_number: "0666666666") }
