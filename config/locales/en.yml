@@ -11,7 +11,8 @@ en:
       content:
         missing:
           authorize: I fill in my phone number
-          explanation: You must provide your phone number to authorized to perform this action
+          explanation: You must provide your phone number to authorized to perform
+            this action
           title: Information needed to carry out this action
     components:
       phone_authorization_handler:
