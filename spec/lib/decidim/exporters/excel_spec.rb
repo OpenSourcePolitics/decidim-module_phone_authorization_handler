@@ -8,8 +8,9 @@ module Decidim
 
     let(:serializer) do
       Class.new do
-        def initialize(resource)
+        def initialize(resource, public_scope = true)
           @resource = resource
+          @public_scope = public_scope
         end
 
         def run
@@ -56,6 +57,31 @@ module Decidim
         expect(worksheet[2][0..4].map(&:value)).to eq([2, "barcat", "bares", "2, 3, 4", 0.55])
         expect(Time.zone.parse(worksheet[2][5].value.to_s)).to eq(Time.zone.local(2017, 9, 20))
       end
+
+      describe "admin export" do
+        it "exports the collection using the right serializer" do
+          exported = StringIO.new(subject.admin_export.read)
+          workbook = RubyXL::Parser.parse_buffer(exported)
+          worksheet = workbook[0]
+          expect(worksheet.sheet_data.rows.length).to eq(7)
+
+          headers = worksheet[0].cells.map(&:value)
+          expect(headers).to eq(["id", "serialized_name/ca", "serialized_name/es", "other_ids", "float", "date"])
+
+          expect(worksheet[1][0..4].map(&:value)).to eq([1, "foocat", "fooes", "1, 2, 3", 1.66])
+
+          expect(Time.zone.parse(worksheet[1][5].value.to_s)).to eq(Time.zone.local(2017, 10, 1, 5, 0))
+
+          expect(worksheet[2][0..4].map(&:value)).to eq([2, "barcat", "bares", "2, 3, 4", 0.55])
+          expect(Time.zone.parse(worksheet[2][5].value.to_s)).to eq(Time.zone.local(2017, 9, 20))
+        end
+
+        it "defines admin_processed_collection only" do
+          subject.admin_export
+          expect(subject.instance_variable_get(:@processed_collection)).to eq(nil)
+          expect(subject.instance_variable_get(:@admin_processed_collection)).not_to eq(nil)
+        end
+      end
     end
 
     describe "export sanitizer" do
@@ -84,6 +110,35 @@ module Decidim
 
         expect(worksheet[6][0..4].map(&:value)).to eq([6, "'-minuscat", "'-minuses", "1, 2, 3", 0.75])
         expect(Time.zone.parse(worksheet[6][5].value.to_s)).to eq(Time.zone.local(2020, 6, 27))
+      end
+
+      describe "admin export" do
+        it "exports the collection sanitizing invalid first chars correctly" do
+          exported = StringIO.new(subject.admin_export.read)
+          workbook = RubyXL::Parser.parse_buffer(exported)
+          worksheet = workbook[0]
+
+          headers = worksheet[0].cells.map(&:value)
+          expect(headers).to eq(["id", "serialized_name/ca", "serialized_name/es", "other_ids", "float", "date"])
+          expect(worksheet[1][0..4].map(&:value)).to eq([1, "foocat", "fooes", "1, 2, 3", 1.66])
+
+          expect(Time.zone.parse(worksheet[1][5].value.to_s)).to eq(Time.zone.local(2017, 10, 1, 5, 0))
+
+          expect(worksheet[2][0..4].map(&:value)).to eq([2, "barcat", "bares", "2, 3, 4", 0.55])
+          expect(Time.zone.parse(worksheet[2][5].value.to_s)).to eq(Time.zone.local(2017, 9, 20))
+
+          expect(worksheet[3][0..4].map(&:value)).to eq([3, "'@atcat", "'@ates", "1, 2, 3", 0.35])
+          expect(Time.zone.parse(worksheet[3][5].value.to_s)).to eq(Time.zone.local(2020, 7, 20))
+
+          expect(worksheet[4][0..4].map(&:value)).to eq([4, "'=equalcat", "'=equales", "1, 2, 3", 0.45])
+          expect(Time.zone.parse(worksheet[4][5].value.to_s)).to eq(Time.zone.local(2020, 6, 24))
+
+          expect(worksheet[5][0..4].map(&:value)).to eq([5, "'+pluscat", "'+pluses", "1, 2, 3", 0.65])
+          expect(Time.zone.parse(worksheet[5][5].value.to_s)).to eq(Time.zone.local(2020, 7, 15))
+
+          expect(worksheet[6][0..4].map(&:value)).to eq([6, "'-minuscat", "'-minuses", "1, 2, 3", 0.75])
+          expect(Time.zone.parse(worksheet[6][5].value.to_s)).to eq(Time.zone.local(2020, 6, 27))
+        end
       end
     end
 
