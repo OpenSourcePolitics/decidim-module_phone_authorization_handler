@@ -1,11 +1,17 @@
-# Decidim::PhoneAuthorizationHandler
+# Module Phone Authorization Handler
 
-A simple authorization handler which asks to the user a phone number before make action.
+Ask a phone number through a Decidim authorization handler before any protected action.
+
+## Requirements
+* Decidim `>= v0.25.2`
 
 ## Usage
 
-PhoneAuthorizationHandler will be available as a Component for a Participatory
-Space.
+**[Work in progress]**
+
+Explain how to setup the authorization handler directly from Decidim's backoffice
+
+
 
 ## Installation
 
@@ -21,9 +27,16 @@ And then execute:
 bundle
 ```
 
+## Customizations
+* Create a new authorization handler
+* Override exporters
+
 ## Contributing
 
-See [Decidim](https://github.com/decidim/decidim).
+See [Decidim](https://github.com/decidim/decidim) for contributing directly to Decidim.
+See [module's contributing guide](./docs/CONTRIBUTING.md) for contributing on the module.
+
+Thanks !
 
 ## License
 
