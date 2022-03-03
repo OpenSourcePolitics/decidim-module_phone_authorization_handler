@@ -9,9 +9,9 @@ module Decidim
 
     let(:serializer) do
       Class.new do
-        def initialize(resource, private_scope = true)
+        def initialize(resource, public_scope = true)
           @resource = resource
-          @private_scope = private_scope
+          @public_scope = public_scope
         end
 
         def run

@@ -13,6 +13,10 @@ module Decidim
           @public_scope = public_scope
         end
 
+        def run
+          serialize
+        end
+
         def serialize
           {
             id: @resource.id,

@@ -14,6 +14,7 @@ module Decidim
 
         Decidim::Exporters::CSV.prepend(Decidim::PhoneAuthorizationHandler::Extends::CSVExporterExtend)
         Decidim::Exporters::Excel.prepend(Decidim::PhoneAuthorizationHandler::Extends::ExcelExporterExtend)
+        Decidim::Exporters::JSON.prepend(Decidim::PhoneAuthorizationHandler::Extends::JSONExporterExtend)
       end
 
       initializer "decidim.phone_authorization_handler" do
