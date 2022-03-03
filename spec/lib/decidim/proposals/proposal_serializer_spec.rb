@@ -134,6 +134,7 @@ module Decidim
           expect(serialized[:related_proposals].length).to eq(2)
           expect(serialized[:related_proposals].first).to match(%r{http.*/proposals})
         end
+
         it "doesn't serialize author's data" do
           expect(serialized).not_to include(:author)
         end

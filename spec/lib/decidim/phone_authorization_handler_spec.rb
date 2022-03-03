@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Decidim::PhoneAuthorizationHandler do
   let(:subject) { described_class }
 

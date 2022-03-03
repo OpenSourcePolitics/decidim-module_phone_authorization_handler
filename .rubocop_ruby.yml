@@ -770,6 +770,12 @@ Style/OptionHash:
     - params
     - parameters
 
+Style/OptionalBooleanParameter:
+  # A list of parameter names that will be flagged by this cop.
+  Exclude:
+    - spec/**/*_spec.rb
+    - lib/decidim/proposals/proposal_serializer.rb
+
 # Allow safe assignment in conditions.
 Style/ParenthesesAroundCondition:
   AllowSafeAssignment: true
@@ -794,6 +800,10 @@ Style/PercentQLiterals:
 
 Style/SlicingWithRange:
   Enabled: false
+
+Style/SoleNestedConditional:
+  Exclude:
+    - lib/decidim/proposals/proposal_serializer.rb
 
 Naming/PredicateName:
   # Predicate name prefixes.
