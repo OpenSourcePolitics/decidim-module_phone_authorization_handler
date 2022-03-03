@@ -4,7 +4,10 @@ source "https://rubygems.org"
 
 ruby RUBY_VERSION
 
-gem "decidim", "0.25.0"
+base_path = File.basename(__dir__) == "development_app" ? "../" : ""
+require_relative "#{base_path}lib/decidim/phone_authorization_handler/version"
+
+gem "decidim", Decidim::PhoneAuthorizationHandler.decidim_compatibility_version
 gem "decidim-phone_authorization_handler", path: "."
 
 gem "bootsnap", "~> 1.4"
@@ -16,7 +19,7 @@ gem "faker", "~> 2.14"
 group :development, :test do
   gem "byebug", "~> 11.0", platform: :mri
 
-  gem "decidim-dev", "0.25.0"
+  gem "decidim-dev", Decidim::PhoneAuthorizationHandler.decidim_compatibility_version
 end
 
 group :development do

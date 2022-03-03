@@ -1,6 +1,3 @@
-/* eslint-disable multiline-ternary, no-ternary */
-// require self
-
 /*
  *
  * This is used to make sure users are redirected to
