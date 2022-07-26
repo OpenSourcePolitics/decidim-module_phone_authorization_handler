@@ -10,7 +10,7 @@ Ask a phone number through a Decidim authorization handler before any protected 
 <img alt="Authorization form of the phone authorization handler" src="./docs/images/authorization_form.png" title="Authorization form" width="300"/>
 
 ## Requirements
-* Decidim `>= v0.25.2`
+* Decidim `>= v0.26.2`
 
 ## Installation
 
@@ -50,9 +50,7 @@ Congratulations, users will have to refer their phone number before being author
 
 ## Please note the customizations
 
-This module overrides decidim's exporters by adding a private export to prevent phone number from being exported by not adminstrators users.
-
-At the moment, this module is fully compatible with Decidim instance, however conflicts can happen with other modules. 
+Contrary to the branch `release/0.26-stable`, this one doesn't override proposal serializer and exporters. 
 
 ## Contributing
 
