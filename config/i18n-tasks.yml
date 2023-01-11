@@ -6,6 +6,10 @@ locales: [en]
 ignore_unused:
   - decidim.components.phone_authorization_handler.name
   - decidim.authorization_handlers.phone_authorization_handler.explanation
+  - decidim.authorization_handlers.phone_authorization_handler.name
+  - decidim.authorization_modals.content.missing.authorize
+  - decidim.authorization_modals.content.missing.explanation
+  - decidim.authorization_modals.content.missing.title
 
 ignore_missing:
   - decidim.participatory_processes.scopes.global
