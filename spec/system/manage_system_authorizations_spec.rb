@@ -21,7 +21,7 @@ describe "Manage system authorizations", type: :system do
   it "can activate phone authorization handler" do
     within ".edit_organization" do
       find("input[value='phone_authorization_handler']").set(true)
-      expect(find("input[value='phone_authorization_handler']").checked?).to eq(true)
+      expect(find("input[value='phone_authorization_handler']").checked?).to be(true)
 
       click_button "Save"
     end

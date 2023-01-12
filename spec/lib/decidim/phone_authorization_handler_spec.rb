@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe Decidim::PhoneAuthorizationHandler do
-  let(:subject) { described_class }
+  subject { described_class }
 
   describe "#version" do
     it "returns module's version" do
@@ -11,7 +11,7 @@ describe Decidim::PhoneAuthorizationHandler do
 
   describe "#decidim_compatibility_version" do
     it "returns decidim compatibility version" do
-      expect(described_class.decidim_compatibility_version).to eq("~> 0.26")
+      expect(described_class.decidim_compatibility_version).to eq("~> 0.27")
     end
   end
 end

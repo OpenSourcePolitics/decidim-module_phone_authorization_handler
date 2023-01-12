@@ -93,8 +93,8 @@ module Decidim
 
       it "defines admin_processed_collection only" do
         subject.admin_export
-        expect(subject.instance_variable_get(:@processed_collection)).to eq(nil)
-        expect(subject.instance_variable_get(:@admin_processed_collection)).not_to eq(nil)
+        expect(subject.instance_variable_get(:@processed_collection)).to be_nil
+        expect(subject.instance_variable_get(:@admin_processed_collection)).not_to be_nil
       end
     end
   end
