@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe Decidim::PhoneAuthorizationHandler do
-  let(:subject) { described_class }
+  subject { described_class }
 
   describe "#version" do
     it "returns module's version" do

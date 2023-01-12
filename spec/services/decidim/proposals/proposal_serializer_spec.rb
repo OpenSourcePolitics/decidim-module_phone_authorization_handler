@@ -31,7 +31,7 @@ module Decidim
           name: "phone_authorization_handler",
           user: proposal.creator_author,
           metadata: {
-            "phone_number": "0644444444"
+            phone_number: "0644444444"
           }
         )
       end
