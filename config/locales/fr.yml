@@ -15,7 +15,7 @@ fr:
           title: Information nécessaire pour réaliser cette action
     components:
       phone_authorization_handler:
-        name: PhoneAuthorizationHandler
+        name: Gestionnaire d'autorisation téléphone
     verifications:
       authorizations:
         new:
@@ -25,7 +25,7 @@ fr:
         start_exploring: consulter le contenu de la plateforme
   errors:
     messages:
-      phone_number_format: Format du numéro de téléphone invalide.
+      phone_number_format: Format du numéro de téléphone invalide
   phone_authorization:
     form:
       email_recuperation_message: La Ville d'Angers peut également chercher à vous contacter à l'adresse email que vous utilisez sur cette plateforme. Ces informations personnelles sont réservées aux administrateurs de la plateforme, et en aucun cas accessibles aux autres utilisateurs.
