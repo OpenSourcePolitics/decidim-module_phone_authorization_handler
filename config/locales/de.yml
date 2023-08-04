@@ -1,0 +1,31 @@
+---
+de:
+  decidim:
+    authorization_handlers:
+      phone_authorization_handler:
+        explanation: Recovery of the user phone number
+        fields:
+          phone_number: Phone number (without point nor whitespace)
+        name: Phone number recovery
+    authorization_modals:
+      content:
+        missing:
+          authorize: I fill in my phone number
+          explanation: Teams of Angers City may need to contact you about your participation. For this reason, we ask you to provide a phone number which allows to reach you.
+          title: Information needed to carry out this action
+    components:
+      phone_authorization_handler:
+        name: PhoneAuthorizationHandler
+    verifications:
+      authorizations:
+        new:
+          authorize: I continue
+          authorize_with: Fill in your phone number
+        skip_verification: You will not be able to continue your action without informing this information. However, you can %{link}
+        start_exploring: consult the content of the platform
+  errors:
+    messages:
+      phone_number_format: Not a valid phone number format
+  phone_authorization:
+    form:
+      email_recuperation_message: The City of Angers may also seek to contact you with the email address you use on this platform. This personal information is reserved for the platform's administrators and is not accessible to other users.
