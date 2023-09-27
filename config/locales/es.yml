@@ -5,7 +5,7 @@ es:
       phone_authorization_handler:
         explanation: Recovery of the user phone number
         fields:
-          phone_number: Phone number (without point nor whitespace)
+          phone_number: Número de teléfono (sin espacio en blanco ni punto)
         name: Phone number recovery
     authorization_modals:
       content:
