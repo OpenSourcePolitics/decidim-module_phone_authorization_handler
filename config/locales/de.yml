@@ -12,20 +12,20 @@ de:
         missing:
           authorize: Ich fülle meine Telefonnummer aus
           explanation: Teams of Angers City may need to contact you about your participation. For this reason, we ask you to provide a phone number which allows to reach you.
-          title: Information needed to carry out this action
+          title: Für die Durchführung dieser Aktion erforderlichen Informationen werden verwendet
     components:
       phone_authorization_handler:
-        name: PhoneAuthorizationHandler
+        name: Telefonautorisierungsmanager
     verifications:
       authorizations:
         new:
-          authorize: I continue
-          authorize_with: Fill in your phone number
-        skip_verification: You will not be able to continue your action without informing this information. However, you can %{link}
-        start_exploring: consult the content of the platform
+          authorize: Ich gehe weiter
+          authorize_with: Füllen Sie Ihre Telefonnummer aus
+        skip_verification: Ohne diese Angaben können Sie Ihre Aktion nicht fortsetzen. Sie können jedoch %{link}
+        start_exploring: den Inhalt der Plattform konsultieren
   errors:
     messages:
-      phone_number_format: Not a valid phone number format
+      phone_number_format: Kein gültiges Telefonnummernformat
   phone_authorization:
     form:
       email_recuperation_message: The City of Angers may also seek to contact you with the email address you use on this platform. This personal information is reserved for the platform's administrators and is not accessible to other users.
