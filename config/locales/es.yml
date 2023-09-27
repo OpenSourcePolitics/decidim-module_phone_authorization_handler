@@ -3,29 +3,29 @@ es:
   decidim:
     authorization_handlers:
       phone_authorization_handler:
-        explanation: Recovery of the user phone number
+        explanation: Recuperación del número de teléfono de la usuaria
         fields:
           phone_number: Número de teléfono (sin espacio en blanco ni punto)
-        name: Phone number recovery
+        name: Recuperación del número de teléfono
     authorization_modals:
       content:
         missing:
-          authorize: I fill in my phone number
-          explanation: Teams of Angers City may need to contact you about your participation. For this reason, we ask you to provide a phone number which allows to reach you.
-          title: Information needed to carry out this action
+          authorize: Introducir mi número de teléfono
+          explanation: Las responsables pueden necesitar ponerse en contacto contigo respecto a tu participación. Es por esto que te pedimos un número de teléfono que nos permita contactarte.
+          title: Información necesaria para realizar esta acción
     components:
       phone_authorization_handler:
-        name: PhoneAuthorizationHandler
+        name: Autorización de requerimiento del número de teléfono
     verifications:
       authorizations:
         new:
-          authorize: I continue
-          authorize_with: Fill in your phone number
-        skip_verification: You will not be able to continue your action without informing this information. However, you can %{link}
-        start_exploring: consult the content of the platform
+          authorize: Continuar
+          authorize_with: Introduce tu número de teléfono
+        skip_verification: No puedes continuar con esta acción sin introducir esta información. No obstante, puedes %{link}
+        start_exploring: consultar el contenido de la plataforma
   errors:
     messages:
-      phone_number_format: Not a valid phone number format
+      phone_number_format: Formato de número de teléfono no válido
   phone_authorization:
     form:
-      email_recuperation_message: The City of Angers may also seek to contact you with the email address you use on this platform. This personal information is reserved for the platform's administrators and is not accessible to other users.
+      email_recuperation_message: Las responsables también podrían necesitar ponerse en contacto contigo a través de la dirección de correo electrónico que utilizas en esta plataforma. El acceso a esta información personal estará reservado a las administradoras de la plataforma y el será inaccesible para el resto de usuarios.
