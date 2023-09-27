@@ -3,14 +3,14 @@ de:
   decidim:
     authorization_handlers:
       phone_authorization_handler:
-        explanation: Recovery of the user phone number
+        explanation: Wiederherstellung der Benutzer-Telefonnummer
         fields:
-          phone_number: Phone number (without point nor whitespace)
-        name: Phone number recovery
+          phone_number: Telefonnummer (ohne Punkt und Leerzeichen)
+        name: Wiederherstellung der Telefonnummer
     authorization_modals:
       content:
         missing:
-          authorize: I fill in my phone number
+          authorize: Ich fülle meine Telefonnummer aus
           explanation: Teams of Angers City may need to contact you about your participation. For this reason, we ask you to provide a phone number which allows to reach you.
           title: Information needed to carry out this action
     components:
