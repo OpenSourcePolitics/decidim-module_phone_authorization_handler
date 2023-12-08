@@ -1,0 +1,31 @@
+---
+ca:
+  decidim:
+    authorization_handlers:
+      phone_authorization_handler:
+        explanation: Recuperació del número de telèfon de la usuària
+        fields:
+          phone_number: Número de telèfon (sense separadors ni espais)
+        name: Recuperació del número de telèfon
+    authorization_modals:
+      content:
+        missing:
+          authorize: Introduir el meu número de telèfon
+          explanation: Les responsables podrien necessitar posar-se en contacte amb tu respecte a la teva participació. És per això que et demanem el teu número de telèfon que ens permeti contactar-te.
+          title: Informació necessària per dur a terme aquesta acció
+    components:
+      phone_authorization_handler:
+        name: Autorització de requeriment del número de telèfon
+    verifications:
+      authorizations:
+        new:
+          authorize: Continuar
+          authorize_with: Introdueix el teu número de telèfon
+        skip_verification: No podràs continuar sense introduir aquesta informació. No obstant això, pots %{link}
+        start_exploring: consultar el contingut de la plataforma
+  errors:
+    messages:
+      phone_number_format: Format de número de telèfon no vàlid
+  phone_authorization:
+    form:
+      email_recuperation_message: Les responsables també podrien necessitar posar-se en contacte amb tu a través de l'adreça de correu electrònic que utilitzes en aquesta plataforma. L'accés a aquesta informació personal estarà reservat a les administradores de la plataforma i la resta d'usuaris no podran accedir-hi.
