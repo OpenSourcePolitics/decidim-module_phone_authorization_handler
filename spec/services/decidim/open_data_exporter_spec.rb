@@ -25,7 +25,7 @@ describe Decidim::OpenDataExporter do
         let(:component) do
           create(:proposal_component, organization: organization, published_at: Time.current)
         end
-        let!(:proposal) { create(:proposal, :published, component: component, title: "My super proposal") }
+        let!(:proposal) { create(:proposal, :published, component: component, title: { en: "My super proposal" }) }
 
         before do
           subject.export
@@ -36,7 +36,7 @@ describe Decidim::OpenDataExporter do
         end
 
         it "includes the proposals data" do
-          expect(csv_data).to include(proposal.title)
+          expect(csv_data).to include(translated(proposal.title))
         end
 
         it "doesn't include the admin proposals data" do
@@ -51,7 +51,7 @@ describe Decidim::OpenDataExporter do
           end
 
           it "includes the proposals data" do
-            expect(csv_data).not_to include(proposal.title)
+            expect(csv_data).not_to include(translated(proposal.title))
           end
         end
       end
@@ -91,7 +91,7 @@ describe Decidim::OpenDataExporter do
         let(:component) do
           create(:meeting_component, organization: organization, published_at: Time.current)
         end
-        let!(:meeting) { create(:meeting, component: component) }
+        let!(:meeting) { create(:meeting, :published, component: component) }
 
         before do
           subject.export

@@ -4,7 +4,14 @@ base_locale: en
 locales: [en]
 
 ignore_unused:
-  - "decidim.components.phone_authorization_handler.name"
+  - decidim.components.phone_authorization_handler.name
+  - decidim.authorization_handlers.phone_authorization_handler.explanation
 
 ignore_missing:
   - decidim.participatory_processes.scopes.global
+  - decidim.admin.exports.notice
+  - decidim.open_data.not_available_yet
+  - decidim.authorization_modals.content.unconfirmed.title
+  - decidim.authorization_modals.content.unconfirmed.explanation_html
+  - decidim.authorization_modals.content.unconfirmed.confirmation_instructions
+  - decidim.authorization_modals.content.unconfirmed.request_confirmation_instructions

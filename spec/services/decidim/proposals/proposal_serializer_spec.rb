@@ -126,14 +126,16 @@ module Decidim
           expect(serialized).to include(attachments: proposal.attachments.count)
         end
 
-        it "serializes the amount of endorsements" do
-          expect(serialized).to include(endorsements: proposal.endorsements.count)
+        it "serializes the endorsements" do
+          expect(serialized[:endorsements]).to include(total_count: proposal.endorsements.count)
+          expect(serialized[:endorsements]).to include(user_endorsements: proposal.endorsements.for_listing.map { |identity| identity.normalized_author&.name })
         end
 
         it "serializes related proposals" do
           expect(serialized[:related_proposals].length).to eq(2)
           expect(serialized[:related_proposals].first).to match(%r{http.*/proposals})
         end
+
         it "doesn't serialize author's data" do
           expect(serialized).not_to include(:author)
         end

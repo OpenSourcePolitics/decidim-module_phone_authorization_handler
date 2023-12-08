@@ -4,7 +4,11 @@ module Decidim
   # This holds the decidim-meetings version.
   module PhoneAuthorizationHandler
     def self.version
-      "0.18.0"
+      "1.0.0"
+    end
+
+    def self.decidim_compatibility_version
+      "0.25.2"
     end
   end
 end

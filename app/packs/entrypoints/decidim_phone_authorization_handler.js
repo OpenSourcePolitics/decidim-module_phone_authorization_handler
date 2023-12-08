@@ -1,0 +1,1 @@
+import "src/decidim/phone_authorization_handler/append_redirect_url_to_modals"

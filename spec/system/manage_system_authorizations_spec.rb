@@ -2,23 +2,17 @@
 
 require "spec_helper"
 
-describe "System authorizations", type: :system do
-  let!(:organization) do
-    create(:organization, available_authorizations: ["phone_authorization_handler"])
-  end
-
+describe "Manage system authorizations", type: :system do
+  let!(:organization) { create(:organization, available_authorizations: ["phone_authorization_handler"]) }
   let(:admin) { create(:admin) }
 
   before do
     switch_to_host(organization.host)
     login_as admin, scope: :admin
-    visit decidim_system.root_path
-    click_link "Organizations"
-    click_link organization.name
-    click_link "Edit"
+    visit decidim_system.edit_organization_path(id: organization.id)
   end
 
-  it "allows the system admin to list all available authorization methods" do
+  it "allow system administrator to list all available authorizations" do
     within ".edit_organization" do
       expect(page).to have_content("Phone number recovery")
     end
@@ -28,6 +22,10 @@ describe "System authorizations", type: :system do
     within ".edit_organization" do
       find("input[value='phone_authorization_handler']").set(true)
       expect(find("input[value='phone_authorization_handler']").checked?).to eq(true)
+
+      click_button "Save"
     end
+
+    expect(page).to have_content("Organization successfully updated.")
   end
 end

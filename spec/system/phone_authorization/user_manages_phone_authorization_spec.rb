@@ -2,41 +2,36 @@
 
 require "spec_helper"
 
-describe "Phone authorization handler form", type: :system do
-  include Decidim::TranslatableAttributes
-
-  let!(:scope) { create_list(:scope, 3, organization: organization) }
+describe "User manages phone authorization", type: :system do
   let!(:organization) do
-    create(:organization,
-           available_authorizations: ["phone_authorization_handler"])
+    create(:organization, available_authorizations: ["phone_authorization_handler"])
   end
 
-  let(:user) { create(:user) }
+  let(:user) { create(:user, :confirmed) }
 
   before do
     switch_to_host(organization.host)
     login_as user, scope: :user
-    visit decidim.root_path
-    click_link user.name
+
+    visit decidim.account_path
     click_link "Authorizations"
   end
 
   it "displays the authorization item" do
     within ".tabs-content.vertical" do
       expect(page).to have_content("Phone number recovery")
+      expect(page).to have_content("Verify your account by entering your phone number")
     end
   end
 
-  context "when accessing authorization" do
+  context "when accessing phone number authorization" do
     before do
-      visit "/authorizations"
-
       click_link "Phone number recovery"
     end
 
     it "displays authorization form" do
       expect(page).to have_content "Fill in your phone number"
-      expect(page).to have_content "The City of Angers may also seek to contact you with the email address you use on this platform. This personal information is reserved for the platform's administrators and is not accessible to other users."
+      expect(page).to have_content "This personal information is reserved to the platform's administrators and is not accessible by other users."
 
       within ".new_authorization_handler" do
         expect(page).to have_field("Phone number (without point nor whitespace)")
@@ -44,21 +39,21 @@ describe "Phone authorization handler form", type: :system do
     end
 
     it "allows user to fill form" do
-      fill_in "Phone number (without point nor whitespace)", with: "0666666666"
+      fill_in "Phone number (without point nor whitespace)", with: "0123456789"
       click_button "I continue"
 
       expect(page).to have_content("You've been successfully authorized")
     end
 
     it "shows error message for too short phone number" do
-      fill_in "Phone number (without point nor whitespace)", with: "066666666"
+      fill_in "Phone number (without point nor whitespace)", with: "012345678"
       click_button "I continue"
 
       expect(page).to have_content("There's an error in this field")
     end
 
     it "shows error message for too long phone number" do
-      fill_in "Phone number (without point nor whitespace)", with: "06666666666666"
+      fill_in "Phone number (without point nor whitespace)", with: "01234567891234"
       click_button "I continue"
 
       expect(page).to have_content("Not a valid phone number format")
