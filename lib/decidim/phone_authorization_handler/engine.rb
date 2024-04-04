@@ -16,14 +16,6 @@ module Decidim
         Decidim::Exporters::Excel.prepend(Decidim::PhoneAuthorizationHandler::Extends::ExcelExporterExtend)
         Decidim::Exporters::JSON.prepend(Decidim::PhoneAuthorizationHandler::Extends::JSONExporterExtend)
       end
-
-      initializer "decidim.phone_authorization_handler" do
-        require "decidim/exporters/serializer"
-        require "decidim/exporters/csv"
-        require "decidim/exporters/json"
-        require "decidim/exporters/excel"
-        require "decidim/proposals/proposal_serializer"
-      end
     end
   end
 end
