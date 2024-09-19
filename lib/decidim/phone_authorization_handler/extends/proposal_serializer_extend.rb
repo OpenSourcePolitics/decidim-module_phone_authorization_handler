@@ -29,6 +29,7 @@ module Decidim::PhoneAuthorizationHandler
           component: { id: component.id },
           title: proposal.title,
           body: proposal.body,
+          address: proposal.address,
           state: proposal.state.to_s,
           reference: proposal.reference,
           answer: ensure_translatable(proposal.answer),
