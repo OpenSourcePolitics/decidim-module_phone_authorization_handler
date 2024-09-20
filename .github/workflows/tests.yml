@@ -83,7 +83,12 @@ jobs:
       - uses: browser-actions/setup-chrome@v1
         with:
           chrome-version: 119.0.6045.105
-
+      - name: Clean npm cache in decidim_dummy_app
+        run: npm cache clean --force
+        working-directory: ./spec/decidim_dummy_app/
+      - name: Install npm dependencies
+        run: npm install
+        working-directory: ./spec/decidim_dummy_app/
       - run: RAILS_ENV=test bundle exec rails assets:precompile
         name: Precompile assets
         working-directory: ./spec/decidim_dummy_app/
