@@ -1,0 +1,15 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env", {
+      "forceAllTransforms": true,
+      "useBuiltIns": "entry",
+      "corejs": 3,
+      "modules": false
+    }
+    ],
+  ],
+  "plugins": [
+    "@babel/plugin-proposal-private-property-in-object"
+  ]
+}
