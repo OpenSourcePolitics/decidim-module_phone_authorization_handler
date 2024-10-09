@@ -83,14 +83,13 @@ jobs:
       - uses: browser-actions/setup-chrome@v1
         with:
           chrome-version: 119.0.6045.105
-
       - run: RAILS_ENV=test bundle exec rails assets:precompile
         name: Precompile assets
         working-directory: ./spec/decidim_dummy_app/
       - run: bundle exec rspec
         name: RSpec
       - uses: codecov/codecov-action@v1
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         if: always()
         with:
           name: screenshots
