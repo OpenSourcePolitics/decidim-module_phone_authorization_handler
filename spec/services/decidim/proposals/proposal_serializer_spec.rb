@@ -162,6 +162,27 @@ module Decidim
             expect(serialized[:author][:phone_number]).not_to be_empty
           end
 
+          context "and proposal has user_group as author" do
+            let!(:proposal) { create(:proposal, :user_group_author, :accepted) }
+
+            before do
+              proposal.coauthorships.clear
+              user = create(:user, organization: proposal.component.participatory_space.organization)
+              user_group = create(:user_group, :verified, organization: user.organization, users: [user])
+              proposal.coauthorships.create(author: user_group)
+            end
+
+            it "serializes author" do
+              expect(serialized).to include(:author)
+            end
+
+            it "data in author are not empty" do
+              expect(serialized[:author][:name]).not_to be_empty
+              expect(serialized[:author][:nickname]).not_to be_empty
+              expect(serialized[:author][:email]).not_to be_empty
+            end
+          end
+
           context "when proposal was created by admin from backoffice" do
             let!(:admin) { create(:user, :admin) }
 
