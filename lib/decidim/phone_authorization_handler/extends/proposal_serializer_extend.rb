@@ -70,7 +70,11 @@ module Decidim::PhoneAuthorizationHandler
           phone_number: ""
         }
         if proposal.creator.decidim_author_type == "Decidim::UserBaseEntity"
-          user = Decidim::User.find proposal.creator_author.id
+          begin
+            user = Decidim::User.find proposal.creator_author.id
+          rescue ActiveRecord::RecordNotFound
+            user = Decidim::UserGroup.find proposal.creator_author.id
+          end
 
           author_metadata[:name] = user.try(:name).presence || ""
           author_metadata[:nickname] = user.try(:nickname).presence || ""
